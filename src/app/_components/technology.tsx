@@ -21,15 +21,29 @@ export default function Technology() {
                  <div className="flex items-center justify-around text-muted-foreground p-8 rounded-lg bg-secondary/50 animate-fade-in">
                     <div className="flex flex-col items-center text-center">
                         <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="rounded-lg">
+                             <defs>
+                                <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style={{stopColor: '#4285F4', stopOpacity: 1}} />
+                                <stop offset="100%" style={{stopColor: '#8F00FF', stopOpacity: 1}} />
+                                </linearGradient>
+                            </defs>
                             <rect width="100" height="100" rx="10" fill="#212121"/>
-                            <circle cx="50" cy="50" r="25" fill="#4285F4"/>
+                            <circle cx="50" cy="50" r="25" fill="url(#logo-gradient)"/>
                             <circle cx="50" cy="50" r="15" fill="#212121"/>
-                            <circle cx="50" cy="50" r="5" fill="#4285F4"/>
+                            <circle cx="50" cy="50" r="5" fill="url(#logo-gradient)"/>
                         </svg>
-
                         <p className="mt-2 text-sm font-semibold">Your Flat Logo</p>
                     </div>
-                    <ArrowRight className="h-12 w-12 icon-gradient animate-pulse" />
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="animate-pulse">
+                        <defs>
+                            <linearGradient id="arrow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style={{stopColor: '#E85D70', stopOpacity: 1}} />
+                                <stop offset="100%" style={{stopColor: '#8F6AE0', stopOpacity: 1}} />
+                            </linearGradient>
+                        </defs>
+                        <path d="M5 12H19" stroke="url(#arrow-gradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M12 5L19 12L12 19" stroke="url(#arrow-gradient)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
                     <div className="flex flex-col items-center text-center">
                         <Image src="https://placehold.co/100x100/8F6AE0/FFFFFF.png?text=3D" alt="3D Mockup" width={100} height={100} className="rounded-lg shadow-lg" data-ai-hint="3d render" />
                         <p className="mt-2 text-sm font-semibold">Final Mockup</p>
