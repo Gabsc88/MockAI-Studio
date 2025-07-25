@@ -31,7 +31,7 @@ export default function HowItWorks() {
                     <Card key={index} className="flex flex-col items-center text-center p-6 border-border/50 hover:border-primary/50 hover:bg-secondary/50 transition-all duration-300 transform hover:-translate-y-2">
                         <CardHeader className="p-0">
                             <div className="mb-4 rounded-full bg-primary/10 p-4">
-                                <step.icon className="h-8 w-8 icon-gradient" />
+                                <step.icon className="h-8 w-8" style={{ color: '#6A98F5' }} />
                             </div>
                             <CardTitle>{step.title}</CardTitle>
                         </CardHeader>
