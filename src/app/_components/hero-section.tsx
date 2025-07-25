@@ -46,7 +46,7 @@ const Typewriter = () => {
 
 
   return (
-    <span className="font-mono text-lg md:text-xl text-accent">
+    <span className="font-mono text-lg md:text-xl bg-gradient-to-r from-[#E85D70] to-[#8F6AE0] bg-clip-text text-transparent">
       {text}
       <span className="animate-ping">|</span>
     </span>
