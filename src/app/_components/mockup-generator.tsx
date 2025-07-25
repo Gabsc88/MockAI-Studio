@@ -14,10 +14,11 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { UploadCloud, Wand2, Sparkles, Download } from 'lucide-react';
+import React from 'react';
 
 const formSchema = z.object({
   prompt: z.string().min(5, 'Please enter a more descriptive prompt.'),
-  logo: z.any().refine(file => file instanceof File, 'Logo file is required.'),
+  logo: z.any().refine((file) => file instanceof File, 'Logo file is required.'),
 });
 
 type MockupGeneratorProps = {

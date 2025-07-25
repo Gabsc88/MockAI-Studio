@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 import MockupGenerator, { type MockupGeneratorRef } from '@/app/_components/mockup-generator';
@@ -30,8 +30,16 @@ const Typewriter = () => {
   const [subIndex, setSubIndex] = useState(0);
   const [reverse, setReverse] = useState(false);
   const [text, setText] = useState('');
+  const [isMounted, setIsMounted] = useState(false);
+
+  // useEffect to handle hydration mismatch for typewriter effect
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
+    if(!isMounted) return;
+
     if (subIndex === prompts[index].length + 1 && !reverse) {
       setTimeout(() => setReverse(true), 2000);
       return;
@@ -48,12 +56,16 @@ const Typewriter = () => {
     }, reverse ? 75 : 150);
 
     return () => clearTimeout(timeout);
-  }, [subIndex, index, reverse]);
-  
-  useEffect(() => {
-    setText(prompts[index].substring(0, subIndex))
-  }, [subIndex, index])
+  }, [subIndex, index, reverse, isMounted]);
 
+  useEffect(() => {
+    if(!isMounted) return;
+    setText(prompts[index].substring(0, subIndex));
+  }, [subIndex, index, isMounted]);
+
+  if (!isMounted) {
+    return <span className="font-mono text-lg md:text-xl bg-gradient-to-r from-[#E85D70] to-[#8F6AE0] bg-clip-text text-transparent">&nbsp;</span>;
+  }
 
   return (
     <span className="font-mono text-lg md:text-xl bg-gradient-to-r from-[#E85D70] to-[#8F6AE0] bg-clip-text text-transparent">
