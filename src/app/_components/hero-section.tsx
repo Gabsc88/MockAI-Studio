@@ -64,7 +64,7 @@ const Typewriter = () => {
 };
 
 export default function HeroSection() {
-  const [generatedMockup, setGeneratedMockup] = useState<string | null>('https://placehold.co/1024x1024.png');
+  const [generatedMockup, setGeneratedMockup] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const mockupGeneratorRef = useRef<MockupGeneratorRef>(null);
 
