@@ -107,12 +107,12 @@ export default function HeroSection() {
               <Typewriter />
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/generate">
-                    <Button size="lg" className="button-gradient transition-shadow duration-300 hover:shadow-lg hover:shadow-primary/40">
+                <Button size="lg" asChild className="button-gradient transition-shadow duration-300 hover:shadow-lg hover:shadow-primary/40">
+                    <Link href="/generate">
                         Generate Now
                         <ArrowRight className="h-5 w-5" />
-                    </Button>
-                </Link>
+                    </Link>
+                </Button>
                 <Button size="lg" variant="outline" asChild className="transition-shadow duration-300 hover:shadow-lg hover:shadow-accent/40">
                    <Link href="#">
                         <Youtube className="mr-2 h-5 w-5" />
