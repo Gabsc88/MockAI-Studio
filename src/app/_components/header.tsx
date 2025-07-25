@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -75,13 +76,13 @@ export default function Header() {
                     type="search"
                     placeholder="Search here"
                     className={cn(
-                        "w-0 transition-all duration-300 ease-in-out pl-8 border-none bg-transparent hover:bg-white/10 hover:rounded-full focus:bg-white/10 focus:rounded-full",
-                        searchExpanded && "w-48"
+                        "w-0 transition-all duration-300 ease-in-out pr-8 border-none bg-transparent hover:bg-white/10 hover:rounded-full focus:bg-white/10 focus:rounded-full",
+                        searchExpanded && "w-48 pl-4"
                     )}
                 />
                 <div className={cn(
-                    "absolute transition-all duration-300 ease-in-out",
-                    searchExpanded ? "left-2" : "left-0"
+                    "absolute transition-all duration-300 ease-in-out right-0",
+                    searchExpanded ? "right-2" : "right-0"
                 )}>
                     <Search className="h-5 w-5 text-muted-foreground" />
                 </div>
