@@ -1,3 +1,4 @@
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Check } from 'lucide-react';
@@ -11,7 +12,7 @@ const teamFeatures = [
 
 export default function ForTeams() {
     return (
-        <section id="teams" className="container mx-auto py-12 md:py-24 lg:py-32">
+        <section id="teams" className="container mx-auto py-12 md:py-16">
             <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
                 <div>
                     <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Built for Agencies & Studios</h2>
