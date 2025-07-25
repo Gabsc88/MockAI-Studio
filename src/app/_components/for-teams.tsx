@@ -17,7 +17,7 @@ export default function ForTeams() {
                     <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Built for Agencies & Studios</h2>
                     <p className="mt-4 max-w-xl text-muted-foreground md:text-xl">Streamline your creative workflow with features designed for collaboration and scale.</p>
                     <div className="mt-8">
-                        <Button size="lg">Book a Demo</Button>
+                        <Button size="lg" className="button-gradient">Book a Demo</Button>
                     </div>
                 </div>
                 <Card className="bg-secondary/50">

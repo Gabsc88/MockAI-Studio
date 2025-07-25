@@ -39,7 +39,7 @@ export default function PromptSuggestions() {
         <CarouselNext className="hidden sm:flex" />
       </Carousel>
       <div className="mt-8 flex justify-center">
-        <Button variant="outline">
+        <Button className="button-gradient">
           <Sparkles className="mr-2 h-4 w-4" />
           Generate a random prompt
         </Button>
