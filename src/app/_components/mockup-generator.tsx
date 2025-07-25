@@ -24,6 +24,7 @@ const formSchema = z.object({
 type MockupGeneratorProps = {
     onMockupGenerated: (url: string | null) => void;
     onLoadingChange: (loading: boolean) => void;
+    onLogoUploaded: (url: string | null) => void;
 };
 
 export type MockupGeneratorRef = {
@@ -32,7 +33,7 @@ export type MockupGeneratorRef = {
 };
 
 const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
-  ({ onMockupGenerated, onLoadingChange }, ref) => {
+  ({ onMockupGenerated, onLoadingChange, onLogoUploaded }, ref) => {
     const [logoPreview, setLogoPreview] = useState<string | null>(null);
     const [logoFile, setLogoFile] = useState<File | null>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -69,6 +70,14 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
       if (file) {
+        if (file.type !== 'image/png') {
+          toast({
+              variant: "destructive",
+              title: "Invalid file type",
+              description: "Please upload a transparent PNG logo.",
+          });
+          return;
+        }
         if (file.size > 4 * 1024 * 1024) {
           toast({
               variant: "destructive",
@@ -81,7 +90,9 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
         form.setValue('logo', file, { shouldValidate: true });
         const reader = new FileReader();
         reader.onloadend = () => {
-          setLogoPreview(reader.result as string);
+          const result = reader.result as string;
+          setLogoPreview(result);
+          onLogoUploaded(result);
         };
         reader.readAsDataURL(file);
       }
@@ -139,10 +150,11 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
         }
       } catch (error) {
         console.error(error);
+        const errorMessage = error instanceof Error ? error.message : "Something went wrong. Please try another prompt or logo.";
         toast({
           variant: "destructive",
           title: "Generation Failed",
-          description: "Something went wrong. Please try another prompt or logo.",
+          description: errorMessage,
         });
         setIsLoading(false);
         onLoadingChange(false);

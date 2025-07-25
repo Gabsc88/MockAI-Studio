@@ -12,21 +12,23 @@ import PromptSuggestions from '../_components/prompt-suggestions';
 
 export default function GeneratePage() {
   const [generatedMockup, setGeneratedMockup] = useState<string | null>(null);
+  const [logoToDisplay, setLogoToDisplay] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const mockupGeneratorRef = useRef<MockupGeneratorRef>(null);
 
   const handleGenerationStatus = (loading: boolean) => {
     setIsLoading(loading);
-    if (!loading) {
-        // Clear previous mockup when starting a new generation
-        setGeneratedMockup(null);
-    }
   };
 
   const handleMockupResult = (url: string | null) => {
     setGeneratedMockup(url);
     setIsLoading(false);
   };
+  
+  const handleLogoUpload = (logoDataUrl: string | null) => {
+    setLogoToDisplay(logoDataUrl);
+    setGeneratedMockup(null); // Clear previous mockup when new logo is uploaded
+  }
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -52,12 +54,17 @@ export default function GeneratePage() {
                             Generate Your Mockup
                         </h1>
                         <p className="max-w-[600px] text-lg text-muted-foreground md:text-xl">
-                            1. Upload a transparent logo. <br/>
+                            1. Upload a transparent PNG logo. <br/>
                             2. Describe the scene for your mockup. <br/>
                             3. Let our AI handle the rest.
                         </p>
                         <div className="w-full max-w-lg">
-                            <MockupGenerator ref={mockupGeneratorRef} onMockupGenerated={handleMockupResult} onLoadingChange={handleGenerationStatus} />
+                            <MockupGenerator 
+                                ref={mockupGeneratorRef} 
+                                onMockupGenerated={handleMockupResult} 
+                                onLoadingChange={handleGenerationStatus} 
+                                onLogoUploaded={handleLogoUpload}
+                            />
                         </div>
                     </div>
                     <div className="relative flex items-center justify-center">
@@ -76,6 +83,15 @@ export default function GeneratePage() {
                                         className="h-full w-full object-cover transition-all duration-500 ease-in-out hover:scale-105"
                                         data-ai-hint="logo mockup"
                                         unoptimized
+                                    />
+                                ) : logoToDisplay ? (
+                                    <Image
+                                        src={logoToDisplay}
+                                        alt="Uploaded logo"
+                                        width={1024}
+                                        height={1024}
+                                        className="h-full w-full object-contain p-8"
+                                        data-ai-hint="logo"
                                     />
                                 ) : (
                                     <div className="w-full h-full bg-muted flex flex-col items-center justify-center gap-4 p-8 text-center">
