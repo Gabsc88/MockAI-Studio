@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useImperativeHandle, forwardRef, useRef } from 'react';
+import { useState, useEffect, forwardRef, useImperativeHandle, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -14,7 +14,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { UploadCloud, Wand2, Sparkles, Download } from 'lucide-react';
-import React from 'react';
+import { useSearchParams } from 'next/navigation';
 
 const formSchema = z.object({
   prompt: z.string().min(5, 'Please enter a more descriptive prompt.'),
@@ -40,14 +40,22 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
     const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
     const { toast } = useToast();
     const uploadRef = useRef<HTMLInputElement>(null);
+    const searchParams = useSearchParams();
+    const initialPrompt = searchParams.get('prompt');
 
     const form = useForm<z.infer<typeof formSchema>>({
       resolver: zodResolver(formSchema),
       defaultValues: {
-        prompt: '',
+        prompt: initialPrompt || '',
         logo: undefined,
       },
     });
+
+    useEffect(() => {
+        if (initialPrompt) {
+            form.setValue('prompt', initialPrompt);
+        }
+    }, [initialPrompt, form]);
 
     useImperativeHandle(ref, () => ({
       setPrompt(prompt: string) {

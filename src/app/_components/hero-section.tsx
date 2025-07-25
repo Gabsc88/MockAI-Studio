@@ -1,11 +1,10 @@
 
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Card, CardContent } from '@/components/ui/card';
-import MockupGenerator, { type MockupGeneratorRef } from '@/app/_components/mockup-generator';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 import HowItWorks from './how-it-works';
 import UseCases from './use-cases';
 import PromptSuggestions from './prompt-suggestions';
@@ -15,6 +14,7 @@ import ForTeams from './for-teams';
 import Testimonials from './testimonials';
 import Pricing from './pricing';
 import FinalCta from './final-cta';
+import { ArrowRight } from 'lucide-react';
 
 const prompts = [
   "Gold foil on black card",
@@ -32,7 +32,6 @@ const Typewriter = () => {
   const [text, setText] = useState('');
   const [isMounted, setIsMounted] = useState(false);
 
-  // useEffect to handle hydration mismatch for typewriter effect
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -76,31 +75,6 @@ const Typewriter = () => {
 };
 
 export default function HeroSection() {
-  const [generatedMockup, setGeneratedMockup] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const mockupGeneratorRef = useRef<MockupGeneratorRef>(null);
-
-  const handleGenerationStatus = (loading: boolean) => {
-    setIsLoading(loading);
-  };
-
-  const handleMockupResult = (url: string | null) => {
-    setGeneratedMockup(url);
-    if (url) {
-        setIsLoading(false);
-    }
-  };
-
-  const handleSetPrompt = (prompt: string) => {
-    mockupGeneratorRef.current?.setPrompt(prompt);
-  };
-
-  const handleFocusUpload = () => {
-    mockupGeneratorRef.current?.focusUpload();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-
   return (
     <>
       <section id="hero" className="relative w-full overflow-hidden pt-24 md:pt-32">
@@ -120,44 +94,36 @@ export default function HeroSection() {
               <Typewriter />
             </div>
             <div className="w-full max-w-lg">
-              <MockupGenerator ref={mockupGeneratorRef} onMockupGenerated={handleMockupResult} onLoadingChange={handleGenerationStatus} />
+                <Button size="lg" asChild className="button-gradient">
+                    <Link href="/generate">
+                        Start Generating Now
+                        <ArrowRight className="h-5 w-5" />
+                    </Link>
+                </Button>
             </div>
           </div>
           <div className="relative flex items-center justify-center">
-              <Card className="w-full max-w-2xl aspect-square overflow-hidden border-2 border-primary/20 shadow-2xl shadow-primary/10">
-                  <CardContent className="p-0">
-                      {isLoading ? (
-                         <Skeleton className="h-full w-full" />
-                      ) : generatedMockup ? (
-                          <Image
-                              src={generatedMockup}
-                              alt="AI generated mockup"
-                              width={1024}
-                              height={1024}
-                              className="h-full w-full object-cover transition-all duration-500 ease-in-out hover:scale-105"
-                              data-ai-hint="logo mockup"
-                              unoptimized
-                          />
-                      ) : (
-                          <div className="w-full h-full bg-muted flex items-center justify-center p-8 text-center">
-                              <p className="text-muted-foreground">Your beautiful mockup will appear here once generated.</p>
-                          </div>
-                      )}
-                  </CardContent>
-              </Card>
+              <Image
+                  src="https://placehold.co/1024x1024.png"
+                  alt="AI generated mockup showcase"
+                  width={1024}
+                  height={1024}
+                  className="h-full w-full object-cover rounded-2xl shadow-2xl shadow-primary/10"
+                  data-ai-hint="logo mockup collage"
+              />
           </div>
         </div>
       </section>
       <div id="interactive-components">
         <HowItWorks />
         <UseCases />
-        <PromptSuggestions onSelectPrompt={handleSetPrompt} />
+        <PromptSuggestions />
         <MockupShowcase />
         <Technology />
         <ForTeams />
         <Testimonials />
         <Pricing />
-        <FinalCta onUploadClick={handleFocusUpload} />
+        <FinalCta />
       </div>
     </>
   );

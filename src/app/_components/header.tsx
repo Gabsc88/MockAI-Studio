@@ -96,7 +96,9 @@ export default function Header() {
                 </div>
             </div>
           <Button variant="ghost" className="hidden sm:inline-flex">Log In</Button>
-          <Button className="button-gradient">Sign Up</Button>
+          <Button asChild className="button-gradient">
+            <Link href="/generate">Get Started</Link>
+          </Button>
         </div>
       </div>
     </header>

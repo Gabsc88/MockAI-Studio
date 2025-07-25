@@ -1,12 +1,9 @@
 
 import { Button } from '@/components/ui/button';
 import { UploadCloud } from 'lucide-react';
+import Link from 'next/link';
 
-type FinalCtaProps = {
-  onUploadClick: () => void;
-};
-
-export default function FinalCta({ onUploadClick }: FinalCtaProps) {
+export default function FinalCta() {
   return (
     <section className="relative w-full overflow-hidden bg-primary/10 py-12 md:py-24 lg:py-32">
         <div 
@@ -17,9 +14,11 @@ export default function FinalCta({ onUploadClick }: FinalCtaProps) {
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Your Logo Deserves More Than a Flat Image</h2>
             <p className="mx-auto mt-4 max-w-[600px] text-muted-foreground md:text-xl">Upload it now and see the transformation.</p>
             <div className="mt-8">
-                <Button size="lg" className="button-gradient" onClick={onUploadClick}>
-                    <UploadCloud className="mr-2 h-5 w-5" />
-                    Upload Your Logo
+                <Button size="lg" className="button-gradient" asChild>
+                    <Link href="/generate">
+                        <UploadCloud className="mr-2 h-5 w-5" />
+                        Upload Your Logo
+                    </Link>
                 </Button>
             </div>
         </div>
