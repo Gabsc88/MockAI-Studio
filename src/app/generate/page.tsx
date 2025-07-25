@@ -92,7 +92,7 @@ export default function GeneratePage() {
                         <p className="max-w-[600px] text-lg text-muted-foreground md:text-xl">
                             1. Upload a transparent PNG logo. <br/>
                             2. Describe the scene for your mockup. <br/>
-                            3. Let our AI handle the rest.
+                            3. And Watch the magic happens
                         </p>
                         <div className="w-full max-w-lg">
                             <MockupGenerator 
