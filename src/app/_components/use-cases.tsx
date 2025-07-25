@@ -25,8 +25,8 @@ export default function UseCases() {
                             <CardContent className="p-0">
                                 <div className="relative">
                                     <Image src={useCase.image} alt={useCase.title} width={600} height={400} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" data-ai-hint={useCase.hint} />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                    <h3 className="absolute bottom-4 left-4 text-xl font-bold text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">{useCase.title}</h3>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                                    <h3 className="absolute bottom-4 left-4 text-xl font-bold text-white">{useCase.title}</h3>
                                 </div>
                             </CardContent>
                         </Card>
