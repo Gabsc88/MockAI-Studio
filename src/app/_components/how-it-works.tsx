@@ -30,8 +30,8 @@ export default function HowItWorks() {
                 {steps.map((step, index) => (
                     <Card key={index} className="flex flex-col items-center text-center p-6 border-border/50 hover:border-primary/50 hover:bg-secondary/50 transition-all duration-300 transform hover:-translate-y-2">
                         <CardHeader className="p-0">
-                            <div className="mb-4 rounded-full bg-primary/10 p-4 text-primary">
-                                <step.icon className="h-8 w-8" />
+                            <div className="mb-4 rounded-full bg-primary/10 p-4">
+                                <step.icon className="h-8 w-8 icon-gradient" />
                             </div>
                             <CardTitle>{step.title}</CardTitle>
                         </CardHeader>

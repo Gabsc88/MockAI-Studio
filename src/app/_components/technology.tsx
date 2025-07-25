@@ -20,7 +20,7 @@ export default function Technology() {
                     <CardContent className="p-8 grid grid-cols-2 gap-8">
                         {tech.map((item) => (
                             <div key={item.name} className="flex items-center gap-4">
-                                <item.icon className="h-8 w-8 text-primary" />
+                                <item.icon className="h-8 w-8 icon-gradient" />
                                 <span className="font-semibold">{item.name}</span>
                             </div>
                         ))}
