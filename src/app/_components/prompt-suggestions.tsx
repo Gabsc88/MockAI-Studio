@@ -5,6 +5,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { Sparkles, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
 
 const suggestions = [
   "Logo engraved on a wooden plaque",
@@ -19,6 +21,9 @@ const suggestions = [
 
 
 export default function PromptSuggestions() {
+  const pathname = usePathname();
+  const isGeneratePage = pathname === '/generate';
+
   return (
     <section className="container mx-auto py-12 md:py-24 lg:py-32">
       <div className="mx-auto mb-12 max-w-2xl text-center">
@@ -42,15 +47,17 @@ export default function PromptSuggestions() {
         <CarouselPrevious className="hidden sm:flex" />
         <CarouselNext className="hidden sm:flex" />
       </Carousel>
-      <div className="mt-8 flex justify-center">
-        <Button asChild className="button-gradient">
-            <Link href="/generate">
-                <Sparkles className="mr-2 h-4 w-4" />
-                Go to the Generator
-                <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-        </Button>
-      </div>
+      {!isGeneratePage && (
+        <div className="mt-8 flex justify-center">
+          <Button asChild className="button-gradient">
+              <Link href="/generate">
+                  <Sparkles className="mr-2 h-4 w-4" />
+                  Go to the Generator
+                  <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+          </Button>
+        </div>
+      )}
     </section>
   );
 }

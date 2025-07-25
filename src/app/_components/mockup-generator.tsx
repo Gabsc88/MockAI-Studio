@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState, useEffect, forwardRef, useImperativeHandle, useRef } from 'react';
+import React, { useState, forwardRef, useImperativeHandle, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -51,7 +51,7 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
       },
     });
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (initialPrompt) {
             form.setValue('prompt', initialPrompt);
         }
