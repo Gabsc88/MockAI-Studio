@@ -25,6 +25,7 @@ type MockupGeneratorProps = {
     onMockupGenerated: (url: string | null) => void;
     onLoadingChange: (loading: boolean) => void;
     onLogoUploaded: (url: string | null) => void;
+    generatedImageUrl: string | null;
 };
 
 export type MockupGeneratorRef = {
@@ -33,12 +34,11 @@ export type MockupGeneratorRef = {
 };
 
 const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
-  ({ onMockupGenerated, onLoadingChange, onLogoUploaded }, ref) => {
+  ({ onMockupGenerated, onLoadingChange, onLogoUploaded, generatedImageUrl }, ref) => {
     const [logoPreview, setLogoPreview] = useState<string | null>(null);
     const [logoFile, setLogoFile] = useState<File | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isPromptLoading, setIsPromptLoading] = useState(false);
-    const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
     const { toast } = useToast();
     const uploadRef = useRef<HTMLInputElement>(null);
     const searchParams = useSearchParams();
@@ -121,7 +121,6 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
       }
       setIsLoading(true);
       onLoadingChange(true);
-      setGeneratedImageUrl(null);
       onMockupGenerated(null);
 
       try {
@@ -133,7 +132,6 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
               prompt: values.prompt,
               logoDataUri,
             });
-            setGeneratedImageUrl(result.mockupDataUri);
             onMockupGenerated(result.mockupDataUri);
             setIsLoading(false);
             onLoadingChange(false);
@@ -213,14 +211,6 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
                       />
                   </div>
               </div>
-              
-              {generatedImageUrl && !isLoading && (
-                   <a href={generatedImageUrl} download="mockup.png" className="w-full">
-                      <Button type="button" variant="outline" className="w-full">
-                          <Download className="mr-2 h-4 w-4" /> Download Mockup
-                      </Button>
-                  </a>
-              )}
 
               <Button type="submit" className="w-full button-gradient" disabled={totalLoading}>
                 {isLoading ? (

@@ -7,8 +7,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import MockupGenerator, { MockupGeneratorRef } from '@/app/_components/mockup-generator';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Download } from 'lucide-react';
 import PromptSuggestions from '../_components/prompt-suggestions';
+import { Button } from '@/components/ui/button';
 
 export default function GeneratePage() {
   const [generatedMockup, setGeneratedMockup] = useState<string | null>(null);
@@ -64,10 +65,11 @@ export default function GeneratePage() {
                                 onMockupGenerated={handleMockupResult} 
                                 onLoadingChange={handleGenerationStatus} 
                                 onLogoUploaded={handleLogoUpload}
+                                generatedImageUrl={generatedMockup}
                             />
                         </div>
                     </div>
-                    <div className="relative flex items-center justify-center">
+                    <div className="relative flex flex-col items-center justify-center gap-4">
                         <Card className="w-full max-w-2xl aspect-square overflow-hidden border-2 border-primary/20 shadow-2xl shadow-primary/10">
                             <CardContent className="p-0 h-full w-full">
                                 {isLoading ? (
@@ -108,6 +110,13 @@ export default function GeneratePage() {
                                 )}
                             </CardContent>
                         </Card>
+                        {generatedMockup && !isLoading && (
+                            <a href={generatedMockup} download="mockup.png" className="w-full max-w-2xl">
+                                <Button type="button" variant="outline" className="w-full">
+                                    <Download className="mr-2 h-4 w-4" /> Download Mockup
+                                </Button>
+                            </a>
+                        )}
                     </div>
                 </div>
             </section>
