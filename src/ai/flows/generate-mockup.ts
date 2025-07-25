@@ -35,13 +35,6 @@ export async function generateMockup(input: GenerateMockupInput): Promise<Genera
   return generateMockupFlow(input);
 }
 
-const prompt = ai.definePrompt({
-  name: 'generateMockupPrompt',
-  input: {schema: GenerateMockupInputSchema},
-  output: {schema: GenerateMockupOutputSchema},
-  prompt: `Generate a realistic mockup of the provided logo in the scene described by the prompt.\n\nLogo: {{media url=logoDataUri}}\n\nScene Description: {{{prompt}}}`,
-});
-
 const generateMockupFlow = ai.defineFlow(
   {
     name: 'generateMockupFlow',
@@ -55,7 +48,11 @@ const generateMockupFlow = ai.defineFlow(
 
       prompt: [
         {media: {url: input.logoDataUri}},
-        {text: input.prompt},
+        {text: `Take the provided logo and place it in a realistic mockup based on the following scene description.
+
+Scene description: ${input.prompt}
+
+VERY IMPORTANT: The provided logo might be white or a very light color. Pay close attention to the logo image and ensure it is clearly visible and accurately represented in the final mockup, even if the scene description suggests a light-colored background. Do not lose the logo.`},
       ],
 
       config: {
