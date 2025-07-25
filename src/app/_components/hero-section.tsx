@@ -106,7 +106,7 @@ export default function HeroSection() {
             <div className="flex w-full items-center space-x-2">
               <Typewriter />
             </div>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4" style={{ pointerEvents: 'auto' }}>
                 <Button size="lg" asChild className="button-gradient transition-shadow duration-300 hover:shadow-lg hover:shadow-primary/40">
                     <Link href="/generate">
                         Generate Now
