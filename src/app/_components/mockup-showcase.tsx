@@ -5,16 +5,17 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
 
 const images = [
-    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup' },
-    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup' },
-    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup' },
-    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup' },
-    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup' },
-    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup' },
-    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup' },
-    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup' },
+    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup', title: "T-Shirt" },
+    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup', title: "Business Card" },
+    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup', title: "Phone Case" },
+    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup', title: "Signage" },
+    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup', title: "Coffee Mug" },
+    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup', title: "Laptop Sticker" },
+    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup', title: "Tote Bag" },
+    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup', title: "Hat Embroidery" },
 ];
 
 export default function MockupShowcase() {
@@ -45,9 +46,15 @@ export default function MockupShowcase() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {images.map((image, i) => (
-                    <div key={i} className="group aspect-square overflow-hidden rounded-lg cursor-pointer">
-                        <Image src={image.src} alt={image.alt} width={600} height={600} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint={image.hint} />
-                    </div>
+                    <Card key={i} className="group overflow-hidden rounded-xl cursor-pointer">
+                        <CardContent className="p-0">
+                            <div className="relative aspect-square">
+                                <Image src={image.src} alt={image.alt} width={600} height={600} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.hint} />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                                <h3 className="absolute bottom-4 left-4 text-xl font-bold text-white">{image.title}</h3>
+                            </div>
+                        </CardContent>
+                    </Card>
                 ))}
             </div>
         </div>
