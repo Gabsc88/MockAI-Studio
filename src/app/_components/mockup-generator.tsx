@@ -154,14 +154,13 @@ export default function MockupGenerator({ onMockupGenerated, onLoadingChange }: 
                       name="prompt"
                       render={({ field }) => (
                         <FormItem>
-                            <div className="flex justify-between items-center mb-2">
-                                <label className="text-sm font-medium">Describe the scene</label>
+                            <div className="flex justify-end items-center mb-2">
                                 <Button type="button" variant="ghost" size="sm" onClick={handleRandomPrompt} disabled={isLoading}>
                                     <Sparkles className="mr-2 h-4 w-4 icon-gradient" /> Inspire Me
                                 </Button>
                             </div>
                             <FormControl>
-                                <Textarea placeholder="e.g., 'Embroidered on a dark denim jacket'" className="resize-none h-28" {...field} />
+                                <Textarea placeholder="Describe the scene e.g., 'Embroidered on a dark denim jacket'" className="resize-none h-28" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
