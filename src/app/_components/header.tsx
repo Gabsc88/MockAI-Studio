@@ -3,16 +3,17 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, Search, Briefcase } from 'lucide-react';
+import { Menu, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
 const Logo = () => (
-    <Link href="/" className="flex items-center gap-2" aria-label="Mockup Studio AI Home">
-      <Briefcase className="h-7 w-7 icon-gradient" />
-      <span className="text-xl font-bold tracking-tighter text-foreground">Mockup Studio AI</span>
+    <Link href="/" className="flex items-center gap-2" aria-label="MockAI Studio. Home">
+      <span className="text-xl font-bold tracking-tighter text-foreground">
+        MockAI Studio<span className="icon-gradient">.</span>
+      </span>
     </Link>
 );
 

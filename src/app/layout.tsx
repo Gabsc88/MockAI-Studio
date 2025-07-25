@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster"
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Mockup Studio AI',
+  title: 'MockAI Studio.',
   description: 'Bring Your Logo to Life in Stunning 2D & 3D Mockups',
 };
 
