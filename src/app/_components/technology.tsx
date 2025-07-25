@@ -1,5 +1,7 @@
+
 import { Card, CardContent } from '@/components/ui/card';
-import { Cpu, Layers3, Lightbulb, Box } from 'lucide-react';
+import { Cpu, Layers3, Lightbulb, Box, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 const tech = [
     { icon: Cpu, name: "Stable Diffusion" },
@@ -26,8 +28,16 @@ export default function Technology() {
                         ))}
                     </CardContent>
                 </Card>
-                <div className="flex items-center justify-center text-muted-foreground">
-                    <p>[Diagram showing flat logo to final mockup transformation]</p>
+                <div className="flex items-center justify-around text-muted-foreground p-8 rounded-lg bg-secondary/50">
+                    <div className="flex flex-col items-center text-center">
+                        <Image src="https://placehold.co/100x100/transparent/000000.png?text=Logo" alt="Flat Logo" width={100} height={100} data-ai-hint="logo placeholder" />
+                        <p className="mt-2 text-sm font-semibold">Your Flat Logo</p>
+                    </div>
+                    <ArrowRight className="h-12 w-12 icon-gradient" />
+                    <div className="flex flex-col items-center text-center">
+                        <Image src="https://placehold.co/100x100/8F6AE0/FFFFFF.png?text=3D" alt="3D Mockup" width={100} height={100} className="rounded-lg shadow-lg" data-ai-hint="3d render" />
+                        <p className="mt-2 text-sm font-semibold">Final Mockup</p>
+                    </div>
                 </div>
             </div>
         </section>

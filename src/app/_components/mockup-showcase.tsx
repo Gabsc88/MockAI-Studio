@@ -1,9 +1,21 @@
+
 'use client';
 
 import { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+
+const images = [
+    { src: 'https://placehold.co/600x600/E85D70/FFFFFF.png', alt: 'Red background mockup', hint: 'logo mockup' },
+    { src: 'https://placehold.co/600x600/8F6AE0/FFFFFF.png', alt: 'Purple background mockup', hint: 'logo mockup' },
+    { src: 'https://placehold.co/600x600/61BDFD/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup' },
+    { src: 'https://placehold.co/600x600/8169D9/FFFFFF.png', alt: 'Dark purple background mockup', hint: 'logo mockup' },
+    { src: 'https://placehold.co/600x600/F9A825/FFFFFF.png', alt: 'Yellow background mockup', hint: 'logo mockup' },
+    { src: 'https://placehold.co/600x600/4CAF50/FFFFFF.png', alt: 'Green background mockup', hint: 'logo mockup' },
+    { src: 'https://placehold.co/600x600/FF5722/FFFFFF.png', alt: 'Orange background mockup', hint: 'logo mockup' },
+    { src: 'https://placehold.co/600x600/3F51B5/FFFFFF.png', alt: 'Indigo background mockup', hint: 'logo mockup' },
+];
 
 export default function MockupShowcase() {
   const [activeFilter, setActiveFilter] = useState('All');
@@ -32,9 +44,9 @@ export default function MockupShowcase() {
                 ))}
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {[...Array(8)].map((_, i) => (
+                {images.map((image, i) => (
                     <div key={i} className="group aspect-square overflow-hidden rounded-lg cursor-pointer">
-                        <Image src={`https://placehold.co/600x600.png`} alt={`Showcase image ${i+1}`} width={600} height={600} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint="logo mockup" />
+                        <Image src={image.src} alt={image.alt} width={600} height={600} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" data-ai-hint={image.hint} />
                     </div>
                 ))}
             </div>
