@@ -46,7 +46,7 @@ export default function MockupShowcase() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {images.map((image, i) => (
-                    <Card key={i} className="group overflow-hidden rounded-xl cursor-pointer">
+                    <Card key={i} className="group overflow-hidden cursor-pointer">
                         <CardContent className="p-0">
                             <div className="relative aspect-square">
                                 <Image src={image.src} alt={image.alt} width={600} height={600} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" data-ai-hint={image.hint} />

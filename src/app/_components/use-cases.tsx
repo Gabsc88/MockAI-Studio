@@ -21,7 +21,7 @@ export default function UseCases() {
                 </div>
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {useCases.map((useCase) => (
-                        <Card key={useCase.title} className="group overflow-hidden rounded-xl cursor-pointer">
+                        <Card key={useCase.title} className="group overflow-hidden cursor-pointer">
                             <CardContent className="p-0">
                                 <div className="relative">
                                     <Image src={useCase.image} alt={useCase.title} width={600} height={400} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" data-ai-hint={useCase.hint} />
