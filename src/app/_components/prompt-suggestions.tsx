@@ -3,20 +3,20 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import { Sparkles, ArrowRight } from 'lucide-react';
+import { Sparkles, ArrowRight, LayoutPanelLeft, Crown, FileText, ShoppingBag, GlassWater, Truck, Mail, Package } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 
 const suggestions = [
-  "Logo engraved on a wooden plaque",
-  "3D puff embroidery on a snapback hat",
-  "Letterpress on thick cotton paper",
-  "Screen-printed on a tote bag",
-  "Laser etched on a metal water bottle",
-  "On the side of a delivery truck",
-  "As a wax seal on an envelope",
-  "Molded in plastic on a product",
+  { prompt: "Logo engraved on a wooden plaque", icon: LayoutPanelLeft },
+  { prompt: "3D puff embroidery on a snapback hat", icon: Crown },
+  { prompt: "Letterpress on thick cotton paper", icon: FileText },
+  { prompt: "Screen-printed on a tote bag", icon: ShoppingBag },
+  { prompt: "Laser etched on a metal water bottle", icon: GlassWater },
+  { prompt: "On the side of a delivery truck", icon: Truck },
+  { prompt: "As a wax seal on an envelope", icon: Mail },
+  { prompt: "Molded in plastic on a product", icon: Package },
 ];
 
 
@@ -32,11 +32,12 @@ export default function PromptSuggestions() {
       </div>
       <Carousel opts={{ align: "start", loop: true }} className="w-full">
         <CarouselContent>
-          {suggestions.map((prompt, index) => (
+          {suggestions.map(({ prompt, icon: Icon }, index) => (
             <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
               <Link href={`/generate?prompt=${encodeURIComponent(prompt)}`}>
-                  <Card className="bg-secondary/50 border-border/50 h-full">
-                    <CardContent className="flex aspect-video items-center justify-center p-6 cursor-pointer">
+                  <Card className="bg-secondary/50 border-border/50 h-full rounded-none">
+                    <CardContent className="flex flex-col gap-4 aspect-video items-center justify-center p-6 cursor-pointer">
+                      <Icon className="h-8 w-8 text-primary" />
                       <span className="text-lg font-semibold text-center">{prompt}</span>
                     </CardContent>
                   </Card>
@@ -61,3 +62,4 @@ export default function PromptSuggestions() {
     </section>
   );
 }
+
