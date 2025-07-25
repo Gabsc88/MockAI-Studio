@@ -12,9 +12,10 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { Wand2, Sparkles } from 'lucide-react';
+import { Wand2, Sparkles, Download, Share2 } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
-import { Download, Share2 } from 'lucide-react';
+import { ShareDialog } from './share-dialog';
+
 
 const formSchema = z.object({
   prompt: z.string().min(5, 'Please enter a more descriptive prompt.'),
@@ -191,9 +192,11 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
                             <Download className="mr-2 h-4 w-4" /> Download Mockup
                         </Button>
                     </a>
-                    <Button type="button" variant="outline" className="w-full">
-                        <Share2 className="mr-2 h-4 w-4" /> Share
-                    </Button>
+                    <ShareDialog shareUrl={generatedMockup} prompt={generatedMockupInfo?.prompt || 'AI Mockup'}>
+                      <Button type="button" variant="outline" className="w-full">
+                          <Share2 className="mr-2 h-4 w-4" /> Share
+                      </Button>
+                    </ShareDialog>
                 </div>
               )}
             </form>
