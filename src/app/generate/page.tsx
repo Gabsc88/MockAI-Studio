@@ -7,12 +7,13 @@ import { Card, CardContent } from '@/components/ui/card';
 import MockupGenerator, { MockupGeneratorRef } from '@/app/_components/mockup-generator';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
-import { ArrowLeft, Download, UploadCloud } from 'lucide-react';
+import { Download, UploadCloud } from 'lucide-react';
 import PromptSuggestions from '../_components/prompt-suggestions';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
 import MockupShowcase from '../_components/mockup-showcase';
+import Footer from '@/app/_components/footer';
 
 export default function GeneratePage() {
   const [generatedMockup, setGeneratedMockup] = useState<string | null>(null);
@@ -69,9 +70,8 @@ export default function GeneratePage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
        <header className="sticky top-0 left-0 right-0 z-50 bg-background/95 shadow-md backdrop-blur-sm">
-            <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
+            <div className="container mx-auto flex h-20 items-center justify-center px-4 md:px-6">
                 <Link href="/" className="flex items-center gap-2" aria-label="Back to Home">
-                    <ArrowLeft className="h-5 w-5" />
                     <span className="text-2xl font-bold tracking-tighter text-foreground">
                         MockAI Studio<span className="icon-gradient">.</span>
                     </span>
@@ -111,25 +111,27 @@ export default function GeneratePage() {
                                     <div className="w-full h-full flex flex-col items-center justify-center bg-muted gap-4 p-8 text-center">
                                         <Skeleton className="h-full w-full" />
                                     </div>
-                                ) : generatedMockup ? (
-                                    <Image
-                                        src={generatedMockup}
-                                        alt="AI generated mockup"
-                                        width={1024}
-                                        height={1024}
-                                        className="h-full w-full object-cover transition-all duration-500 ease-in-out hover:scale-105"
-                                        data-ai-hint="logo mockup"
-                                        unoptimized
-                                    />
                                 ) : logoPreview ? (
-                                    <Image
-                                        src={logoPreview}
-                                        alt="Uploaded logo"
-                                        width={1024}
-                                        height={1024}
-                                        className="h-full w-full object-contain p-8"
-                                        data-ai-hint="logo"
-                                    />
+                                     generatedMockup ? (
+                                        <Image
+                                            src={generatedMockup}
+                                            alt="AI generated mockup"
+                                            width={1024}
+                                            height={1024}
+                                            className="h-full w-full object-cover transition-all duration-500 ease-in-out hover:scale-105"
+                                            data-ai-hint="logo mockup"
+                                            unoptimized
+                                        />
+                                    ) : (
+                                        <Image
+                                            src={logoPreview}
+                                            alt="Uploaded logo"
+                                            width={1024}
+                                            height={1024}
+                                            className="h-full w-full object-contain p-8"
+                                            data-ai-hint="logo"
+                                        />
+                                    )
                                 ) : (
                                     <div onClick={handlePreviewClick} className="w-full h-full bg-muted flex flex-col items-center justify-center gap-4 p-8 text-center cursor-pointer border-2 border-dashed border-muted-foreground/50 hover:border-primary transition-colors">
                                         <UploadCloud className="mx-auto h-12 w-12 text-muted-foreground" />
@@ -154,6 +156,7 @@ export default function GeneratePage() {
                 <MockupShowcase />
             </div>
         </main>
+      <Footer />
     </div>
   );
 }
