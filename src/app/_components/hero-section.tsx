@@ -14,7 +14,7 @@ import ForTeams from './for-teams';
 import Testimonials from './testimonials';
 import Pricing from './pricing';
 import FinalCta from './final-cta';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Youtube } from 'lucide-react';
 
 const prompts = [
   "Gold foil on black card",
@@ -93,11 +93,17 @@ export default function HeroSection() {
             <div className="flex w-full items-center space-x-2">
               <Typewriter />
             </div>
-            <div className="w-full max-w-lg">
+            <div className="flex flex-col sm:flex-row gap-4">
                 <Button size="lg" asChild className="button-gradient">
                     <Link href="/generate">
-                        Start Generating Now
+                        Generate Now
                         <ArrowRight className="h-5 w-5" />
+                    </Link>
+                </Button>
+                <Button size="lg" variant="outline" asChild>
+                   <Link href="#">
+                        <Youtube className="mr-2 h-5 w-5" />
+                        See Demo
                     </Link>
                 </Button>
             </div>
