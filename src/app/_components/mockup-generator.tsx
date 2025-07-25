@@ -35,6 +35,7 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
     const [logoPreview, setLogoPreview] = useState<string | null>(null);
     const [logoFile, setLogoFile] = useState<File | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isPromptLoading, setIsPromptLoading] = useState(false);
     const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
     const { toast } = useToast();
     const uploadRef = useRef<HTMLInputElement>(null);
@@ -78,8 +79,7 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
     };
     
     const handleRandomPrompt = async () => {
-      setIsLoading(true);
-      onLoadingChange(true);
+      setIsPromptLoading(true);
       try {
           const result = await generateRandomPrompt({});
           form.setValue('prompt', result.prompt, { shouldValidate: true });
@@ -90,8 +90,7 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
               description: "Failed to generate a random prompt. Please try again.",
           });
       } finally {
-          setIsLoading(false);
-          onLoadingChange(false);
+          setIsPromptLoading(false);
       }
     };
 
@@ -133,6 +132,8 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
         onLoadingChange(false);
       }
     };
+    
+    const totalLoading = isLoading || isPromptLoading;
 
     return (
       <Card className="w-full bg-secondary/50 border-border/50">
@@ -148,7 +149,7 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
                         <label htmlFor="logo-upload" className="block text-sm font-medium mb-2">Your Logo</label>
                         <FormControl className="flex-grow">
                             <div className="relative flex items-center justify-center w-full h-full border-2 border-dashed rounded-lg cursor-pointer border-muted-foreground/50 hover:border-primary transition-colors">
-                                <Input ref={uploadRef} id="logo-upload" type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/png, image/svg+xml" onChange={handleFileChange} />
+                                <Input ref={uploadRef} id="logo-upload" type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/png, image/svg+xml" onChange={handleFileChange} disabled={totalLoading}/>
                                 {logoPreview ? (
                                     <img src={logoPreview} alt="Logo preview" className="h-full w-full object-contain p-2" />
                                 ) : (
@@ -170,12 +171,12 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
                         render={({ field }) => (
                           <FormItem className="flex flex-col flex-grow">
                               <div className="flex justify-end items-center mb-2">
-                                  <Button type="button" variant="ghost" size="sm" onClick={handleRandomPrompt} disabled={isLoading}>
+                                  <Button type="button" variant="ghost" size="sm" onClick={handleRandomPrompt} disabled={totalLoading}>
                                       <Sparkles className="mr-2 h-4 w-4 icon-gradient" /> Inspire Me
                                   </Button>
                               </div>
                               <FormControl className="flex-grow">
-                                  <Textarea placeholder="Describe the scene e.g., 'Embroidered on a dark denim jacket'" className="resize-none h-full" {...field} />
+                                  <Textarea placeholder="Describe the scene e.g., 'Embroidered on a dark denim jacket'" className="resize-none h-full" {...field} disabled={totalLoading}/>
                               </FormControl>
                               <FormMessage />
                           </FormItem>
@@ -192,7 +193,7 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
                   </a>
               )}
 
-              <Button type="submit" className="w-full button-gradient" disabled={isLoading}>
+              <Button type="submit" className="w-full button-gradient" disabled={totalLoading}>
                 {isLoading ? (
                     <>
                       <svg className="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -201,6 +202,14 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
                       </svg>
                       Generating...
                     </>
+                ) : isPromptLoading ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Thinking...
+                  </>
                 ) : (
                     <>
                       <Wand2 className="mr-2 h-4 w-4" /> Generate Mockup
