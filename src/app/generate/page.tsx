@@ -7,15 +7,20 @@ import { Card, CardContent } from '@/components/ui/card';
 import MockupGenerator, { MockupGeneratorRef } from '@/app/_components/mockup-generator';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
-import { ArrowLeft, Download } from 'lucide-react';
+import { ArrowLeft, Download, UploadCloud } from 'lucide-react';
 import PromptSuggestions from '../_components/prompt-suggestions';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
+import { Input } from '@/components/ui/input';
 
 export default function GeneratePage() {
   const [generatedMockup, setGeneratedMockup] = useState<string | null>(null);
-  const [logoToDisplay, setLogoToDisplay] = useState<string | null>(null);
+  const [logoPreview, setLogoPreview] = useState<string | null>(null);
+  const [logoFile, setLogoFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const mockupGeneratorRef = useRef<MockupGeneratorRef>(null);
+  const uploadRef = useRef<HTMLInputElement>(null);
+  const { toast } = useToast();
 
   const handleGenerationStatus = (loading: boolean) => {
     setIsLoading(loading);
@@ -25,10 +30,39 @@ export default function GeneratePage() {
     setGeneratedMockup(url);
     setIsLoading(false);
   };
-  
-  const handleLogoUpload = (logoDataUrl: string | null) => {
-    setLogoToDisplay(logoDataUrl);
-    setGeneratedMockup(null); // Clear previous mockup when new logo is uploaded
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      if (file.type !== 'image/png') {
+        toast({
+            variant: "destructive",
+            title: "Invalid file type",
+            description: "Please upload a transparent PNG logo.",
+        });
+        return;
+      }
+      if (file.size > 4 * 1024 * 1024) {
+        toast({
+            variant: "destructive",
+            title: "File too large",
+            description: "Please upload a logo smaller than 4MB.",
+        });
+        return;
+      }
+      setLogoFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result as string;
+        setLogoPreview(result);
+        setGeneratedMockup(null); // Clear previous mockup
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handlePreviewClick = () => {
+      uploadRef.current?.click();
   }
 
   return (
@@ -64,14 +98,14 @@ export default function GeneratePage() {
                                 ref={mockupGeneratorRef} 
                                 onMockupGenerated={handleMockupResult} 
                                 onLoadingChange={handleGenerationStatus} 
-                                onLogoUploaded={handleLogoUpload}
-                                generatedImageUrl={generatedMockup}
+                                logoFile={logoFile}
                             />
                         </div>
                     </div>
                     <div className="relative flex flex-col items-center justify-center gap-4">
                         <Card className="w-full max-w-2xl aspect-square overflow-hidden border-2 border-primary/20 shadow-2xl shadow-primary/10">
                             <CardContent className="p-0 h-full w-full">
+                                <Input ref={uploadRef} id="logo-upload" type="file" className="hidden" accept="image/png" onChange={handleFileChange} disabled={isLoading}/>
                                 {isLoading ? (
                                     <div className="w-full h-full flex flex-col items-center justify-center bg-muted gap-4 p-8 text-center">
                                         <Skeleton className="h-full w-full" />
@@ -86,9 +120,9 @@ export default function GeneratePage() {
                                         data-ai-hint="logo mockup"
                                         unoptimized
                                     />
-                                ) : logoToDisplay ? (
+                                ) : logoPreview ? (
                                     <Image
-                                        src={logoToDisplay}
+                                        src={logoPreview}
                                         alt="Uploaded logo"
                                         width={1024}
                                         height={1024}
@@ -96,16 +130,10 @@ export default function GeneratePage() {
                                         data-ai-hint="logo"
                                     />
                                 ) : (
-                                    <div className="w-full h-full bg-muted flex flex-col items-center justify-center gap-4 p-8 text-center">
-                                        <Image 
-                                            src="https://placehold.co/600x400.png"
-                                            alt="Placeholder for mockup"
-                                            width={600}
-                                            height={400}
-                                            className="rounded-lg opacity-20"
-                                            data-ai-hint="abstract illustration"
-                                        />
-                                        <p className="text-muted-foreground">Your beautiful mockup will appear here once generated.</p>
+                                    <div onClick={handlePreviewClick} className="w-full h-full bg-muted flex flex-col items-center justify-center gap-4 p-8 text-center cursor-pointer border-2 border-dashed border-muted-foreground/50 hover:border-primary transition-colors">
+                                        <UploadCloud className="mx-auto h-12 w-12 text-muted-foreground" />
+                                        <h3 className="text-lg font-semibold">Click to upload your logo</h3>
+                                        <p className="text-muted-foreground text-sm">Transparent PNG, up to 4MB</p>
                                     </div>
                                 )}
                             </CardContent>
@@ -127,3 +155,4 @@ export default function GeneratePage() {
     </div>
   );
 }
+
