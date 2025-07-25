@@ -30,7 +30,6 @@ type MockupGeneratorProps = {
     onMockupGenerated: (info: GeneratedMockupInfo | null) => void;
     onLoadingChange: (loading: boolean) => void;
     logoFile: File | null;
-    generatedMockupInfo: GeneratedMockupInfo | null;
 };
 
 export type MockupGeneratorRef = {
@@ -38,9 +37,10 @@ export type MockupGeneratorRef = {
 };
 
 const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
-  ({ onMockupGenerated, onLoadingChange, logoFile, generatedMockupInfo }, ref) => {
+  ({ onMockupGenerated, onLoadingChange, logoFile }, ref) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isPromptLoading, setIsPromptLoading] = useState(false);
+    const [generatedMockupInfo, setGeneratedMockupInfo] = useState<GeneratedMockupInfo | null>(null);
     const { toast } = useToast();
     const searchParams = useSearchParams();
     const initialPrompt = searchParams.get('prompt');
@@ -92,6 +92,7 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
       }
       setIsLoading(true);
       onLoadingChange(true);
+      setGeneratedMockupInfo(null);
       onMockupGenerated(null);
 
       try {
@@ -103,7 +104,9 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
               prompt: values.prompt,
               logoDataUri,
             });
-            onMockupGenerated({ url: result.mockupDataUri, prompt: values.prompt });
+            const info = { url: result.mockupDataUri, prompt: values.prompt };
+            setGeneratedMockupInfo(info);
+            onMockupGenerated(info);
             setIsLoading(false);
             onLoadingChange(false);
         };
@@ -149,7 +152,7 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
                   <FormItem className="flex flex-col flex-grow h-48">
                       <div className="flex justify-between items-center mb-2">
                           <label htmlFor={field.name} className="block text-sm font-medium">Describe the Scene</label>
-                          <Button type="button" variant="ghost" size="sm" onClick={handleRandomPrompt} disabled={totalLoading}>
+                          <Button type="button" variant="outline" size="sm" onClick={handleRandomPrompt} disabled={totalLoading} className="button-enhance-gradient">
                               <Sparkles className="mr-2 h-4 w-4 icon-gradient" /> Enhance prompt
                           </Button>
                       </div>

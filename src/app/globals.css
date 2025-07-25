@@ -62,4 +62,7 @@
     background-clip: text;
     text-fill-color: transparent;
   }
+  .button-enhance-gradient {
+    background-image: linear-gradient(to right, #292D36, #2E3443);
+  }
 }

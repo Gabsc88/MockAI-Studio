@@ -108,7 +108,6 @@ export default function GeneratePage() {
                                 onMockupGenerated={handleMockupResult} 
                                 onLoadingChange={handleGenerationStatus} 
                                 logoFile={logoFile}
-                                generatedMockupInfo={generatedMockupInfo}
                             />
                         </div>
                     </div>
