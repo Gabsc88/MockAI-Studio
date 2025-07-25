@@ -14,6 +14,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { useToast } from '@/hooks/use-toast';
 import { Wand2, Sparkles } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
+import { Download, Share2 } from 'lucide-react';
 
 const formSchema = z.object({
   prompt: z.string().min(5, 'Please enter a more descriptive prompt.'),
@@ -28,6 +29,7 @@ type MockupGeneratorProps = {
     onMockupGenerated: (info: GeneratedMockupInfo | null) => void;
     onLoadingChange: (loading: boolean) => void;
     logoFile: File | null;
+    generatedMockupInfo: GeneratedMockupInfo | null;
 };
 
 export type MockupGeneratorRef = {
@@ -35,7 +37,7 @@ export type MockupGeneratorRef = {
 };
 
 const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
-  ({ onMockupGenerated, onLoadingChange, logoFile }, ref) => {
+  ({ onMockupGenerated, onLoadingChange, logoFile, generatedMockupInfo }, ref) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isPromptLoading, setIsPromptLoading] = useState(false);
     const { toast } = useToast();
@@ -63,8 +65,9 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
     
     const handleRandomPrompt = async () => {
       setIsPromptLoading(true);
+      const currentPrompt = form.getValues('prompt');
       try {
-          const result = await generateRandomPrompt({});
+          const result = await generateRandomPrompt({ prompt: currentPrompt });
           form.setValue('prompt', result.prompt, { shouldValidate: true });
       } catch (error) {
           toast({
@@ -128,6 +131,11 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
     
     const totalLoading = isLoading || isPromptLoading;
 
+    const generatedMockup = generatedMockupInfo?.url;
+    const downloadFilename = generatedMockupInfo?.prompt 
+      ? `${generatedMockupInfo.prompt.toLowerCase().replace(/\s+/g, '-').slice(0, 30)}.png`
+      : 'mockup.png';
+
     return (
       <Card className="w-full bg-secondary/50 border-border/50">
         <CardContent className="p-4 md:p-6">
@@ -175,6 +183,19 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
                     </>
                 )}
               </Button>
+
+              {generatedMockup && !isLoading && (
+                <div className="w-full flex flex-col sm:flex-row gap-4">
+                    <a href={generatedMockup} download={downloadFilename} className="w-full">
+                        <Button type="button" variant="outline" className="w-full">
+                            <Download className="mr-2 h-4 w-4" /> Download Mockup
+                        </Button>
+                    </a>
+                    <Button type="button" variant="outline" className="w-full">
+                        <Share2 className="mr-2 h-4 w-4" /> Share
+                    </Button>
+                </div>
+              )}
             </form>
           </Form>
         </CardContent>

@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import MockupGenerator, { MockupGeneratorRef } from '@/app/_components/mockup-generator';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
-import { Download, UploadCloud, ArrowLeft, Share2 } from 'lucide-react';
+import { UploadCloud, ArrowLeft } from 'lucide-react';
 import PromptSuggestions from '../_components/prompt-suggestions';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -73,9 +73,6 @@ export default function GeneratePage() {
   }
 
   const generatedMockup = generatedMockupInfo?.url;
-  const downloadFilename = generatedMockupInfo?.prompt 
-      ? `${generatedMockupInfo.prompt.toLowerCase().replace(/\s+/g, '-').slice(0, 30)}.png`
-      : 'mockup.png';
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -111,20 +108,9 @@ export default function GeneratePage() {
                                 onMockupGenerated={handleMockupResult} 
                                 onLoadingChange={handleGenerationStatus} 
                                 logoFile={logoFile}
+                                generatedMockupInfo={generatedMockupInfo}
                             />
                         </div>
-                         {generatedMockup && !isLoading && (
-                            <div className="w-full max-w-lg flex flex-col sm:flex-row gap-4">
-                                <a href={generatedMockup} download={downloadFilename} className="w-full">
-                                    <Button type="button" variant="outline" className="w-full">
-                                        <Download className="mr-2 h-4 w-4" /> Download Mockup
-                                    </Button>
-                                </a>
-                                <Button type="button" variant="outline" className="w-full">
-                                    <Share2 className="mr-2 h-4 w-4" /> Share
-                                </Button>
-                            </div>
-                        )}
                     </div>
                     <div className="relative flex flex-col items-center justify-center gap-4">
                         <Card className="w-full max-w-2xl aspect-square overflow-hidden border-2 border-primary/20 shadow-2xl shadow-primary/10">
