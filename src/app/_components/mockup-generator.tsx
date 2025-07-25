@@ -79,6 +79,7 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
     
     const handleRandomPrompt = async () => {
       setIsLoading(true);
+      onLoadingChange(true);
       try {
           const result = await generateRandomPrompt({});
           form.setValue('prompt', result.prompt, { shouldValidate: true });
@@ -90,6 +91,7 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
           });
       } finally {
           setIsLoading(false);
+          onLoadingChange(false);
       }
     };
 
@@ -114,10 +116,6 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
             });
             setGeneratedImageUrl(result.mockupDataUri);
             onMockupGenerated(result.mockupDataUri);
-            toast({
-                title: "Success!",
-                description: "Your mockup has been generated.",
-            });
             setIsLoading(false);
             onLoadingChange(false);
         };
