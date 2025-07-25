@@ -16,7 +16,7 @@ const GenerateMockupInputSchema = z.object({
   logoDataUri: z
     .string()
     .describe(
-      "A transparent logo (PNG or SVG) as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:<mimetype>;base64,<encoded_data>'."
+      "A transparent logo (PNG) as a data URI that must include a MIME type and use Base64 encoding. Expected format: 'data:image/png;base64,<encoded_data>'."
     ),
   prompt: z.string().describe('A text prompt describing the desired mockup scene.'),
 });
@@ -65,4 +65,3 @@ const generateMockupFlow = ai.defineFlow(
     return {mockupDataUri: media.url!};
   }
 );
-
