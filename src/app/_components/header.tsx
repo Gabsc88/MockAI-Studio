@@ -35,27 +35,33 @@ export default function Header() {
       scrolled ? "bg-background/95 shadow-md backdrop-blur-sm" : "bg-transparent"
     )}>
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
-        <div className="flex items-center gap-4 md:hidden">
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Menu className="h-6 w-6" />
-                  <span className="sr-only">Toggle menu</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="w-[300px] bg-background p-6">
-                <div className="mb-8">
-                  <Logo />
-                </div>
-                <nav className="flex flex-col gap-4 text-lg">
-                    <Link href="#features" className="text-muted-foreground hover:text-foreground">Features</Link>
-                    <Link href="#pricing" className="text-muted-foreground hover:text-foreground">Pricing</Link>
-                    <Link href="#testimonials" className="text-muted-foreground hover:text-foreground">Testimonials</Link>
-                </nav>
-              </SheetContent>
-            </Sheet>
+        <div className="flex items-center gap-4">
+            <div className="flex md:hidden">
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                      <Menu className="h-6 w-6" />
+                      <span className="sr-only">Toggle menu</span>
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent side="left" className="w-[300px] bg-background p-6">
+                    <div className="mb-8">
+                      <Logo />
+                    </div>
+                    <nav className="flex flex-col gap-4 text-lg">
+                        <Link href="#features" className="text-muted-foreground hover:text-foreground">Features</Link>
+                        <Link href="#pricing" className="text-muted-foreground hover:text-foreground">Pricing</Link>
+                        <Link href="#testimonials" className="text-muted-foreground hover:text-foreground">Testimonials</Link>
+                    </nav>
+                  </SheetContent>
+                </Sheet>
+            </div>
+            <div className="hidden md:flex">
+                <Logo />
+            </div>
         </div>
-        <div className="hidden md:flex">
+        
+        <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           <nav className="flex items-center gap-6 text-sm font-medium">
             <Link href="#features" className="text-muted-foreground transition-colors hover:text-foreground">Features</Link>
             <Link href="#pricing" className="text-muted-foreground transition-colors hover:text-foreground">Pricing</Link>
@@ -63,9 +69,10 @@ export default function Header() {
           </nav>
         </div>
 
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="flex md:hidden">
             <Logo />
         </div>
+
 
         <div className="flex items-center gap-2">
             <div 
