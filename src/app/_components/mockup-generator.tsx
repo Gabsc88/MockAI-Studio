@@ -124,15 +124,15 @@ export default function MockupGenerator({ onMockupGenerated, onLoadingChange }: 
       <CardContent className="p-4 md:p-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-start">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
                 <FormField
                   control={form.control}
                   name="logo"
                   render={({ field }) => (
-                  <FormItem className="md:col-span-1">
+                  <FormItem className="md:col-span-1 flex flex-col">
                       <label htmlFor="logo-upload" className="block text-sm font-medium mb-2">Your Logo</label>
-                      <FormControl>
-                          <div className="relative flex items-center justify-center w-full h-28 border-2 border-dashed rounded-lg cursor-pointer border-muted-foreground/50 hover:border-primary transition-colors">
+                      <FormControl className="flex-grow">
+                          <div className="relative flex items-center justify-center w-full h-full border-2 border-dashed rounded-lg cursor-pointer border-muted-foreground/50 hover:border-primary transition-colors">
                               <Input id="logo-upload" type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/png, image/svg+xml" onChange={handleFileChange} />
                               {logoPreview ? (
                                   <img src={logoPreview} alt="Logo preview" className="h-full w-full object-contain p-2" />
@@ -148,19 +148,19 @@ export default function MockupGenerator({ onMockupGenerated, onLoadingChange }: 
                   </FormItem>
                   )}
                 />
-                <div className="md:col-span-2">
+                <div className="md:col-span-2 flex flex-col">
                     <FormField
                       control={form.control}
                       name="prompt"
                       render={({ field }) => (
-                        <FormItem>
+                        <FormItem className="flex flex-col flex-grow">
                             <div className="flex justify-end items-center mb-2">
                                 <Button type="button" variant="ghost" size="sm" onClick={handleRandomPrompt} disabled={isLoading}>
                                     <Sparkles className="mr-2 h-4 w-4 icon-gradient" /> Inspire Me
                                 </Button>
                             </div>
-                            <FormControl>
-                                <Textarea placeholder="Describe the scene e.g., 'Embroidered on a dark denim jacket'" className="resize-none h-28" {...field} />
+                            <FormControl className="flex-grow">
+                                <Textarea placeholder="Describe the scene e.g., 'Embroidered on a dark denim jacket'" className="resize-none h-full" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
