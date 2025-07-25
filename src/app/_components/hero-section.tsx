@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -15,6 +15,9 @@ import Testimonials from './testimonials';
 import Pricing from './pricing';
 import FinalCta from './final-cta';
 import { ArrowRight, Youtube } from 'lucide-react';
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import Autoplay from "embla-carousel-autoplay"
+
 
 const prompts = [
   "Gold foil on black card",
@@ -23,6 +26,13 @@ const prompts = [
   "Logo on a coffee cup",
   "Neon sign in a bar",
   "Embossed on leather",
+];
+
+const sliderImages = [
+    { src: 'https://placehold.co/1024x1024.png', alt: 'AI generated mockup of a logo on a sign', hint: 'logo sign' },
+    { src: 'https://placehold.co/1024x1024.png', alt: 'AI generated mockup of a logo on a t-shirt', hint: 'logo shirt' },
+    { src: 'https://placehold.co/1024x1024.png', alt: 'AI generated mockup of a logo on a business card', hint: 'logo card' },
+    { src: 'https://placehold.co/1024x1024.png', alt: 'AI generated mockup of a logo on a mug', hint: 'logo mug' },
 ];
 
 const Typewriter = () => {
@@ -75,6 +85,9 @@ const Typewriter = () => {
 };
 
 export default function HeroSection() {
+  const plugin = React.useRef(
+      Autoplay({ delay: 2000, stopOnInteraction: true })
+    )
   return (
     <>
       <section id="hero" className="relative w-full overflow-hidden pt-24 md:pt-32">
@@ -109,14 +122,27 @@ export default function HeroSection() {
             </div>
           </div>
           <div className="relative flex items-center justify-center">
-              <Image
-                  src="https://placehold.co/1024x1024.png"
-                  alt="AI generated mockup showcase"
-                  width={1024}
-                  height={1024}
-                  className="h-full w-full object-cover rounded-2xl shadow-2xl shadow-primary/10"
-                  data-ai-hint="logo mockup collage"
-              />
+              <Carousel 
+                className="w-full"
+                plugins={[plugin.current]}
+                onMouseEnter={() => plugin.current.stop()}
+                onMouseLeave={() => plugin.current.reset()}
+              >
+                <CarouselContent>
+                  {sliderImages.map((image, index) => (
+                    <CarouselItem key={index}>
+                        <Image
+                            src={image.src}
+                            alt={image.alt}
+                            width={1024}
+                            height={1024}
+                            className="h-full w-full object-cover shadow-2xl shadow-primary/10"
+                            data-ai-hint={image.hint}
+                        />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
           </div>
         </div>
       </section>
