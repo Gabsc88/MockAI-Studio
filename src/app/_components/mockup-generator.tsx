@@ -1,6 +1,7 @@
+
 'use client';
 
-import { useState } from 'react';
+import { useState, useImperativeHandle, forwardRef, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -24,177 +25,197 @@ type MockupGeneratorProps = {
     onLoadingChange: (loading: boolean) => void;
 };
 
-export default function MockupGenerator({ onMockupGenerated, onLoadingChange }: MockupGeneratorProps) {
-  const [logoPreview, setLogoPreview] = useState<string | null>(null);
-  const [logoFile, setLogoFile] = useState<File | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
-  const { toast } = useToast();
+export type MockupGeneratorRef = {
+  setPrompt: (prompt: string) => void;
+  focusUpload: () => void;
+};
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      prompt: '',
-      logo: undefined,
-    },
-  });
+const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
+  ({ onMockupGenerated, onLoadingChange }, ref) => {
+    const [logoPreview, setLogoPreview] = useState<string | null>(null);
+    const [logoFile, setLogoFile] = useState<File | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [generatedImageUrl, setGeneratedImageUrl] = useState<string | null>(null);
+    const { toast } = useToast();
+    const uploadRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      if (file.size > 4 * 1024 * 1024) {
-        toast({
-            variant: "destructive",
-            title: "File too large",
-            description: "Please upload a logo smaller than 4MB.",
-        });
-        return;
+    const form = useForm<z.infer<typeof formSchema>>({
+      resolver: zodResolver(formSchema),
+      defaultValues: {
+        prompt: '',
+        logo: undefined,
+      },
+    });
+
+    useImperativeHandle(ref, () => ({
+      setPrompt(prompt: string) {
+        form.setValue('prompt', prompt, { shouldValidate: true });
+      },
+      focusUpload() {
+        uploadRef.current?.click();
       }
-      setLogoFile(file);
-      form.setValue('logo', file, { shouldValidate: true });
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setLogoPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-  
-  const handleRandomPrompt = async () => {
-    setIsLoading(true);
-    try {
-        const result = await generateRandomPrompt({});
-        form.setValue('prompt', result.prompt, { shouldValidate: true });
-    } catch (error) {
-        toast({
-            variant: "destructive",
-            title: "Error",
-            description: "Failed to generate a random prompt. Please try again.",
-        });
-    } finally {
-        setIsLoading(false);
-    }
-  };
+    }));
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    if (!logoFile) {
-        form.setError('logo', { type: 'manual', message: 'Logo file is required.' });
-        return;
-    }
-    setIsLoading(true);
-    onLoadingChange(true);
-    setGeneratedImageUrl(null);
-    onMockupGenerated(null);
-
-    try {
-      const reader = new FileReader();
-      reader.readAsDataURL(logoFile);
-      reader.onload = async () => {
-          const logoDataUri = reader.result as string;
-          const result = await generateMockup({
-            prompt: values.prompt,
-            logoDataUri,
-          });
-          setGeneratedImageUrl(result.mockupDataUri);
-          onMockupGenerated(result.mockupDataUri);
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (file) {
+        if (file.size > 4 * 1024 * 1024) {
           toast({
-              title: "Success!",
-              description: "Your mockup has been generated.",
+              variant: "destructive",
+              title: "File too large",
+              description: "Please upload a logo smaller than 4MB.",
           });
-          setIsLoading(false);
-          onLoadingChange(false);
-      };
-      reader.onerror = (error) => {
-        throw new Error("Failed to read file");
+          return;
+        }
+        setLogoFile(file);
+        form.setValue('logo', file, { shouldValidate: true });
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setLogoPreview(reader.result as string);
+        };
+        reader.readAsDataURL(file);
       }
-    } catch (error) {
-      console.error(error);
-      toast({
-        variant: "destructive",
-        title: "Generation Failed",
-        description: "Something went wrong. Please try another prompt or logo.",
-      });
-      setIsLoading(false);
-      onLoadingChange(false);
-    }
-  };
+    };
+    
+    const handleRandomPrompt = async () => {
+      setIsLoading(true);
+      try {
+          const result = await generateRandomPrompt({});
+          form.setValue('prompt', result.prompt, { shouldValidate: true });
+      } catch (error) {
+          toast({
+              variant: "destructive",
+              title: "Error",
+              description: "Failed to generate a random prompt. Please try again.",
+          });
+      } finally {
+          setIsLoading(false);
+      }
+    };
 
-  return (
-    <Card className="w-full bg-secondary/50 border-border/50">
-      <CardContent className="p-4 md:p-6">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
-                <FormField
-                  control={form.control}
-                  name="logo"
-                  render={({ field }) => (
-                  <FormItem className="md:col-span-1 flex flex-col">
-                      <label htmlFor="logo-upload" className="block text-sm font-medium mb-2">Your Logo</label>
-                      <FormControl className="flex-grow">
-                          <div className="relative flex items-center justify-center w-full h-full border-2 border-dashed rounded-lg cursor-pointer border-muted-foreground/50 hover:border-primary transition-colors">
-                              <Input id="logo-upload" type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/png, image/svg+xml" onChange={handleFileChange} />
-                              {logoPreview ? (
-                                  <img src={logoPreview} alt="Logo preview" className="h-full w-full object-contain p-2" />
-                              ) : (
-                                  <div className="text-center text-muted-foreground p-2">
-                                      <UploadCloud className="mx-auto h-8 w-8" />
-                                      <p className="text-xs">PNG or SVG, &lt;4MB</p>
-                                  </div>
-                              )}
-                          </div>
-                      </FormControl>
-                      <FormMessage />
-                  </FormItem>
-                  )}
-                />
-                <div className="md:col-span-2 flex flex-col">
-                    <FormField
-                      control={form.control}
-                      name="prompt"
-                      render={({ field }) => (
-                        <FormItem className="flex flex-col flex-grow">
-                            <div className="flex justify-end items-center mb-2">
-                                <Button type="button" variant="ghost" size="sm" onClick={handleRandomPrompt} disabled={isLoading}>
-                                    <Sparkles className="mr-2 h-4 w-4 icon-gradient" /> Inspire Me
-                                </Button>
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+      if (!logoFile) {
+          form.setError('logo', { type: 'manual', message: 'Logo file is required.' });
+          return;
+      }
+      setIsLoading(true);
+      onLoadingChange(true);
+      setGeneratedImageUrl(null);
+      onMockupGenerated(null);
+
+      try {
+        const reader = new FileReader();
+        reader.readAsDataURL(logoFile);
+        reader.onload = async () => {
+            const logoDataUri = reader.result as string;
+            const result = await generateMockup({
+              prompt: values.prompt,
+              logoDataUri,
+            });
+            setGeneratedImageUrl(result.mockupDataUri);
+            onMockupGenerated(result.mockupDataUri);
+            toast({
+                title: "Success!",
+                description: "Your mockup has been generated.",
+            });
+            setIsLoading(false);
+            onLoadingChange(false);
+        };
+        reader.onerror = (error) => {
+          throw new Error("Failed to read file");
+        }
+      } catch (error) {
+        console.error(error);
+        toast({
+          variant: "destructive",
+          title: "Generation Failed",
+          description: "Something went wrong. Please try another prompt or logo.",
+        });
+        setIsLoading(false);
+        onLoadingChange(false);
+      }
+    };
+
+    return (
+      <Card className="w-full bg-secondary/50 border-border/50">
+        <CardContent className="p-4 md:p-6">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
+                  <FormField
+                    control={form.control}
+                    name="logo"
+                    render={({ field }) => (
+                    <FormItem className="md:col-span-1 flex flex-col">
+                        <label htmlFor="logo-upload" className="block text-sm font-medium mb-2">Your Logo</label>
+                        <FormControl className="flex-grow">
+                            <div className="relative flex items-center justify-center w-full h-full border-2 border-dashed rounded-lg cursor-pointer border-muted-foreground/50 hover:border-primary transition-colors">
+                                <Input ref={uploadRef} id="logo-upload" type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/png, image/svg+xml" onChange={handleFileChange} />
+                                {logoPreview ? (
+                                    <img src={logoPreview} alt="Logo preview" className="h-full w-full object-contain p-2" />
+                                ) : (
+                                    <div className="text-center text-muted-foreground p-2">
+                                        <UploadCloud className="mx-auto h-8 w-8" />
+                                        <p className="text-xs">PNG or SVG, &lt;4MB</p>
+                                    </div>
+                                )}
                             </div>
-                            <FormControl className="flex-grow">
-                                <Textarea placeholder="Describe the scene e.g., 'Embroidered on a dark denim jacket'" className="resize-none h-full" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                </div>
-            </div>
-            
-            {generatedImageUrl && !isLoading && (
-                 <a href={generatedImageUrl} download="mockup.png" className="w-full">
-                    <Button type="button" variant="outline" className="w-full">
-                        <Download className="mr-2 h-4 w-4" /> Download Mockup
-                    </Button>
-                </a>
-            )}
-
-            <Button type="submit" className="w-full button-gradient" disabled={isLoading}>
-              {isLoading ? (
-                  <>
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Generating...
-                  </>
-              ) : (
-                  <>
-                    <Wand2 className="mr-2 h-4 w-4" /> Generate Mockup
-                  </>
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+                    )}
+                  />
+                  <div className="md:col-span-2 flex flex-col">
+                      <FormField
+                        control={form.control}
+                        name="prompt"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-col flex-grow">
+                              <div className="flex justify-end items-center mb-2">
+                                  <Button type="button" variant="ghost" size="sm" onClick={handleRandomPrompt} disabled={isLoading}>
+                                      <Sparkles className="mr-2 h-4 w-4 icon-gradient" /> Inspire Me
+                                  </Button>
+                              </div>
+                              <FormControl className="flex-grow">
+                                  <Textarea placeholder="Describe the scene e.g., 'Embroidered on a dark denim jacket'" className="resize-none h-full" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                  </div>
+              </div>
+              
+              {generatedImageUrl && !isLoading && (
+                   <a href={generatedImageUrl} download="mockup.png" className="w-full">
+                      <Button type="button" variant="outline" className="w-full">
+                          <Download className="mr-2 h-4 w-4" /> Download Mockup
+                      </Button>
+                  </a>
               )}
-            </Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
-  );
-}
+
+              <Button type="submit" className="w-full button-gradient" disabled={isLoading}>
+                {isLoading ? (
+                    <>
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Generating...
+                    </>
+                ) : (
+                    <>
+                      <Wand2 className="mr-2 h-4 w-4" /> Generate Mockup
+                    </>
+                )}
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    );
+  }
+);
+MockupGenerator.displayName = "MockupGenerator";
+
+export default MockupGenerator;
