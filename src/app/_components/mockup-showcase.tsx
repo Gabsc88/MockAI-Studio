@@ -1,7 +1,14 @@
+'use client';
+
+import { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 export default function MockupShowcase() {
+  const [activeFilter, setActiveFilter] = useState('All');
+  const filters = ['All', '2D', '3D', 'Textured', 'Animated'];
+
   return (
     <section className="bg-secondary/30 py-12 md:py-24 lg:py-32">
         <div className="container mx-auto">
@@ -10,11 +17,19 @@ export default function MockupShowcase() {
                 <p className="mt-4 text-muted-foreground md:text-xl">See what our AI can create.</p>
             </div>
             <div className="flex justify-center gap-2 mb-8">
-                <Button>All</Button>
-                <Button variant="outline">2D</Button>
-                <Button variant="outline">3D</Button>
-                <Button variant="outline">Textured</Button>
-                <Button variant="outline">Animated</Button>
+                {filters.map((filter) => (
+                    <Button 
+                        key={filter}
+                        variant={activeFilter === filter ? 'default' : 'outline'}
+                        onClick={() => setActiveFilter(filter)}
+                        className={cn(
+                            activeFilter === filter && 'button-showcase-gradient text-primary-foreground',
+                            activeFilter !== filter && 'hover:bg-primary/10 hover:border-primary/50'
+                        )}
+                    >
+                        {filter}
+                    </Button>
+                ))}
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {[...Array(8)].map((_, i) => (

@@ -52,6 +52,9 @@
   .button-gradient {
     background-image: linear-gradient(to right, #E85D70, #8F6AE0);
   }
+  .button-showcase-gradient {
+    background-image: linear-gradient(to right, #61BDFD, #8169D9);
+  }
   .icon-gradient {
     background-image: linear-gradient(to right, #61BDFD, #8169D9);
     -webkit-background-clip: text;
