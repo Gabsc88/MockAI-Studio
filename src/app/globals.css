@@ -82,3 +82,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .button-gradient {
+    background-image: linear-gradient(to right, #E85D70, #8F6AE0);
+  }
+  .icon-gradient {
+    color: #E85D70;
+  }
+}

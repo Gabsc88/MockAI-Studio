@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 
 const Logo = () => (
     <Link href="/" className="flex items-center gap-2" aria-label="Mockup Studio AI Home">
-      <Briefcase className="h-7 w-7 text-primary" />
+      <Briefcase className="h-7 w-7 icon-gradient" />
       <span className="text-xl font-bold tracking-tighter text-foreground">Mockup Studio AI</span>
     </Link>
 );
@@ -69,7 +69,7 @@ export default function Header() {
             <span className="sr-only">Search</span>
           </Button>
           <Button variant="ghost" className="hidden sm:inline-flex">Log In</Button>
-          <Button>Sign Up</Button>
+          <Button className="button-gradient">Sign Up</Button>
         </div>
       </div>
     </header>

@@ -157,7 +157,7 @@ export default function MockupGenerator({ onMockupGenerated, onLoadingChange }: 
                             <div className="flex justify-between items-center mb-2">
                                 <label className="text-sm font-medium">Describe the scene</label>
                                 <Button type="button" variant="ghost" size="sm" onClick={handleRandomPrompt} disabled={isLoading}>
-                                    <Sparkles className="mr-2 h-4 w-4" /> Inspire Me
+                                    <Sparkles className="mr-2 h-4 w-4 icon-gradient" /> Inspire Me
                                 </Button>
                             </div>
                             <FormControl>
@@ -178,7 +178,7 @@ export default function MockupGenerator({ onMockupGenerated, onLoadingChange }: 
                 </a>
             )}
 
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button type="submit" className="w-full button-gradient" disabled={isLoading}>
               {isLoading ? (
                   <>
                     <svg className="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">

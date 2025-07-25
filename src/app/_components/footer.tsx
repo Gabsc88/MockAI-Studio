@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="container mx-auto grid grid-cols-2 gap-8 px-4 py-12 md:grid-cols-5 md:px-6">
         <div className="col-span-2 flex flex-col items-start gap-4 md:col-span-1">
           <Link href="/" className="flex items-center gap-2">
-            <Briefcase className="h-7 w-7 text-primary" />
+            <Briefcase className="h-7 w-7 icon-gradient" />
             <span className="text-xl font-bold tracking-tighter text-foreground">Mockup Studio AI</span>
           </Link>
           <p className="text-sm text-muted-foreground">AI-powered mockups for your brand.</p>
@@ -45,7 +45,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t border-border">
-          <div className="container mx-auto flex items-center justify-between px-4 py-4 md:px-6">
+          <div className="container mx-auto flex items-center justify-center px-4 py-4 md:px-6">
             <p className="text-xs text-muted-foreground">&copy; {new Date().getFullYear()} Mockup Studio AI. All rights reserved.</p>
           </div>
       </div>

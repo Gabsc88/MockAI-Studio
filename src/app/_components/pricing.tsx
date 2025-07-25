@@ -57,14 +57,14 @@ export default function Pricing() {
                                 <ul className="space-y-2">
                                     {plan.features.map((feature) => (
                                         <li key={feature} className="flex items-center gap-2">
-                                            <Check className="h-4 w-4 text-primary" />
+                                            <Check className="h-4 w-4 icon-gradient" />
                                             <span className="text-sm text-muted-foreground">{feature}</span>
                                         </li>
                                     ))}
                                 </ul>
                             </CardContent>
                             <CardFooter>
-                                <Button className="w-full" variant={plan.popular ? "default" : "outline"}>{plan.cta}</Button>
+                                <Button className={`w-full ${plan.popular ? 'button-gradient' : ''}`} variant={plan.popular ? "default" : "outline"}>{plan.cta}</Button>
                             </CardFooter>
                         </Card>
                     ))}
