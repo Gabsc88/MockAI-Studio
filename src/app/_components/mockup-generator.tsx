@@ -135,7 +135,7 @@ export default function MockupGenerator({ onMockupGenerated, onLoadingChange }: 
                           <div className="relative flex items-center justify-center w-full h-28 border-2 border-dashed rounded-lg cursor-pointer border-muted-foreground/50 hover:border-primary transition-colors">
                               <Input id="logo-upload" type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/png, image/svg+xml" onChange={handleFileChange} />
                               {logoPreview ? (
-                                  <img src={logoPreview} alt="Logo preview" className="h-20 w-20 object-contain p-2" />
+                                  <img src={logoPreview} alt="Logo preview" className="h-full w-full object-contain p-2" />
                               ) : (
                                   <div className="text-center text-muted-foreground p-2">
                                       <UploadCloud className="mx-auto h-8 w-8" />
