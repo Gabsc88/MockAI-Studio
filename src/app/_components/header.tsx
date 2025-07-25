@@ -75,7 +75,7 @@ export default function Header() {
                     type="search"
                     placeholder="Search here"
                     className={cn(
-                        "w-0 transition-all duration-300 ease-in-out pl-8",
+                        "w-0 transition-all duration-300 ease-in-out pl-8 border-none bg-transparent hover:bg-white/10 hover:rounded-full focus:bg-white/10 focus:rounded-full",
                         searchExpanded && "w-48"
                     )}
                 />
