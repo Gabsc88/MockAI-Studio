@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="container mx-auto grid grid-cols-2 gap-8 px-4 py-12 md:grid-cols-5 md:px-6">
         <div className="col-span-2 flex flex-col items-start gap-4 md:col-span-1">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold tracking-tighter text-foreground">
+            <span className="text-2xl font-bold tracking-tighter text-foreground">
                 MockAI Studio<span className="icon-gradient">.</span>
             </span>
           </Link>

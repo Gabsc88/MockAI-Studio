@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 
 const Logo = () => (
     <Link href="/" className="flex items-center gap-2" aria-label="MockAI Studio. Home">
-      <span className="text-xl font-bold tracking-tighter text-foreground">
+      <span className="text-2xl font-bold tracking-tighter text-foreground">
         MockAI Studio<span className="icon-gradient">.</span>
       </span>
     </Link>
