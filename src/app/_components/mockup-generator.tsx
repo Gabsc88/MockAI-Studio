@@ -19,8 +19,13 @@ const formSchema = z.object({
   prompt: z.string().min(5, 'Please enter a more descriptive prompt.'),
 });
 
+type GeneratedMockupInfo = {
+    url: string;
+    prompt: string;
+};
+
 type MockupGeneratorProps = {
-    onMockupGenerated: (url: string | null) => void;
+    onMockupGenerated: (info: GeneratedMockupInfo | null) => void;
     onLoadingChange: (loading: boolean) => void;
     logoFile: File | null;
 };
@@ -94,7 +99,7 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
               prompt: values.prompt,
               logoDataUri,
             });
-            onMockupGenerated(result.mockupDataUri);
+            onMockupGenerated({ url: result.mockupDataUri, prompt: values.prompt });
             setIsLoading(false);
             onLoadingChange(false);
         };

@@ -15,8 +15,13 @@ import { Input } from '@/components/ui/input';
 import MockupShowcase from '../_components/mockup-showcase';
 import Footer from '@/app/_components/footer';
 
+type GeneratedMockupInfo = {
+    url: string;
+    prompt: string;
+};
+
 export default function GeneratePage() {
-  const [generatedMockup, setGeneratedMockup] = useState<string | null>(null);
+  const [generatedMockupInfo, setGeneratedMockupInfo] = useState<GeneratedMockupInfo | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,8 +33,8 @@ export default function GeneratePage() {
     setIsLoading(loading);
   };
 
-  const handleMockupResult = (url: string | null) => {
-    setGeneratedMockup(url);
+  const handleMockupResult = (info: GeneratedMockupInfo | null) => {
+    setGeneratedMockupInfo(info);
     setIsLoading(false);
   };
 
@@ -57,7 +62,7 @@ export default function GeneratePage() {
       reader.onloadend = () => {
         const result = reader.result as string;
         setLogoPreview(result);
-        setGeneratedMockup(null); // Clear previous mockup
+        setGeneratedMockupInfo(null); // Clear previous mockup
       };
       reader.readAsDataURL(file);
     }
@@ -66,6 +71,11 @@ export default function GeneratePage() {
   const handlePreviewClick = () => {
       uploadRef.current?.click();
   }
+
+  const generatedMockup = generatedMockupInfo?.url;
+  const downloadFilename = generatedMockupInfo?.prompt 
+      ? `${generatedMockupInfo.prompt.toLowerCase().replace(/\s+/g, '-').slice(0, 30)}.png`
+      : 'mockup.png';
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -105,7 +115,7 @@ export default function GeneratePage() {
                         </div>
                          {generatedMockup && !isLoading && (
                             <div className="w-full max-w-lg flex flex-col sm:flex-row gap-4">
-                                <a href={generatedMockup} download="mockup.png" className="w-full">
+                                <a href={generatedMockup} download={downloadFilename} className="w-full">
                                     <Button type="button" variant="outline" className="w-full">
                                         <Download className="mr-2 h-4 w-4" /> Download Mockup
                                     </Button>
