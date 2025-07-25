@@ -17,28 +17,34 @@ export default function Technology() {
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Powered by Cutting-Edge AI</h2>
                 <p className="mt-4 text-muted-foreground md:text-xl">We use a suite of advanced technologies to create photorealistic results.</p>
             </div>
-            <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2">
-                <Card className="bg-secondary/50">
-                    <CardContent className="p-8 grid grid-cols-2 gap-8">
-                        {tech.map((item) => (
-                            <div key={item.name} className="flex items-center gap-4">
-                                <item.icon className="h-8 w-8 icon-gradient" />
-                                <span className="font-semibold">{item.name}</span>
-                            </div>
-                        ))}
-                    </CardContent>
-                </Card>
-                <div className="flex items-center justify-around text-muted-foreground p-8 rounded-lg bg-secondary/50">
+            <div className="grid grid-cols-1 items-center gap-8">
+                 <div className="flex items-center justify-around text-muted-foreground p-8 rounded-lg bg-secondary/50 animate-fade-in">
                     <div className="flex flex-col items-center text-center">
-                        <Image src="https://placehold.co/100x100/transparent/000000.png?text=Logo" alt="Flat Logo" width={100} height={100} data-ai-hint="logo placeholder" />
+                        <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="rounded-lg">
+                            <rect width="100" height="100" rx="10" fill="#212121"/>
+                            <circle cx="50" cy="50" r="25" fill="#4285F4"/>
+                            <circle cx="50" cy="50" r="15" fill="#212121"/>
+                            <circle cx="50" cy="50" r="5" fill="#4285F4"/>
+                        </svg>
+
                         <p className="mt-2 text-sm font-semibold">Your Flat Logo</p>
                     </div>
-                    <ArrowRight className="h-12 w-12 icon-gradient" />
+                    <ArrowRight className="h-12 w-12 icon-gradient animate-pulse" />
                     <div className="flex flex-col items-center text-center">
                         <Image src="https://placehold.co/100x100/8F6AE0/FFFFFF.png?text=3D" alt="3D Mockup" width={100} height={100} className="rounded-lg shadow-lg" data-ai-hint="3d render" />
                         <p className="mt-2 text-sm font-semibold">Final Mockup</p>
                     </div>
                 </div>
+                <Card className="bg-secondary/50">
+                    <CardContent className="p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+                        {tech.map((item) => (
+                            <div key={item.name} className="flex flex-col items-center text-center gap-4">
+                                <item.icon className="h-8 w-8" style={{ color: '#6A98F5' }} />
+                                <span className="font-semibold">{item.name}</span>
+                            </div>
+                        ))}
+                    </CardContent>
+                </Card>
             </div>
         </section>
     );
