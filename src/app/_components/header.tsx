@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Menu, Search, Briefcase } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
 const Logo = () => (
@@ -16,6 +17,7 @@ const Logo = () => (
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [searchExpanded, setSearchExpanded] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,10 +66,26 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon">
-            <Search className="h-5 w-5" />
-            <span className="sr-only">Search</span>
-          </Button>
+            <div 
+              className="relative flex items-center"
+              onMouseEnter={() => setSearchExpanded(true)}
+              onMouseLeave={() => setSearchExpanded(false)}
+            >
+                <Input 
+                    type="search"
+                    placeholder="Search here"
+                    className={cn(
+                        "w-0 transition-all duration-300 ease-in-out pl-8",
+                        searchExpanded && "w-48"
+                    )}
+                />
+                <div className={cn(
+                    "absolute transition-all duration-300 ease-in-out",
+                    searchExpanded ? "left-2" : "left-0"
+                )}>
+                    <Search className="h-5 w-5 text-muted-foreground" />
+                </div>
+            </div>
           <Button variant="ghost" className="hidden sm:inline-flex">Log In</Button>
           <Button className="button-gradient">Sign Up</Button>
         </div>
