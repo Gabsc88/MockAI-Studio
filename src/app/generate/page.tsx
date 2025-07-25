@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import MockupGenerator, { MockupGeneratorRef } from '@/app/_components/mockup-generator';
 import { Skeleton } from '@/components/ui/skeleton';
 import Link from 'next/link';
-import { Download, UploadCloud, ArrowLeft, Share2, Twitter, Facebook, Linkedin } from 'lucide-react';
+import { Download, UploadCloud, ArrowLeft, Share2 } from 'lucide-react';
 import PromptSuggestions from '../_components/prompt-suggestions';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -110,14 +110,9 @@ export default function GeneratePage() {
                                         <Download className="mr-2 h-4 w-4" /> Download Mockup
                                     </Button>
                                 </a>
-                                <div className="w-full flex items-center gap-2">
-                                    <Button type="button" variant="outline" className="w-full">
-                                        <Share2 className="mr-2 h-4 w-4" /> Share
-                                    </Button>
-                                    <Button size="icon" variant="outline"><Twitter className="h-4 w-4"/></Button>
-                                    <Button size="icon" variant="outline"><Facebook className="h-4 w-4"/></Button>
-                                    <Button size="icon" variant="outline"><Linkedin className="h-4 w-4"/></Button>
-                                </div>
+                                <Button type="button" variant="outline" className="w-full">
+                                    <Share2 className="mr-2 h-4 w-4" /> Share
+                                </Button>
                             </div>
                         )}
                     </div>
