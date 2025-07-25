@@ -12,6 +12,7 @@ import PromptSuggestions from '../_components/prompt-suggestions';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
+import MockupShowcase from '../_components/mockup-showcase';
 
 export default function GeneratePage() {
   const [generatedMockup, setGeneratedMockup] = useState<string | null>(null);
@@ -149,10 +150,10 @@ export default function GeneratePage() {
                 </div>
             </section>
             <div className="mt-16 md:mt-24">
-             <PromptSuggestions />
+                <PromptSuggestions />
+                <MockupShowcase />
             </div>
         </main>
     </div>
   );
 }
-
