@@ -119,7 +119,14 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
             onLoadingChange(false);
         };
         reader.onerror = (error) => {
-          throw new Error("Failed to read file");
+            console.error("File reading error:", error);
+            toast({
+                variant: "destructive",
+                title: "File Error",
+                description: "Could not read the uploaded file. Please try again.",
+            });
+            setIsLoading(false);
+            onLoadingChange(false);
         }
       } catch (error) {
         console.error(error);
@@ -170,13 +177,14 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
                         name="prompt"
                         render={({ field }) => (
                           <FormItem className="flex flex-col flex-grow">
-                              <div className="flex justify-end items-center mb-2">
+                              <div className="flex justify-between items-center mb-2">
+                                  <label htmlFor={field.name} className="block text-sm font-medium">Describe the Scene</label>
                                   <Button type="button" variant="ghost" size="sm" onClick={handleRandomPrompt} disabled={totalLoading}>
                                       <Sparkles className="mr-2 h-4 w-4 icon-gradient" /> Inspire Me
                                   </Button>
                               </div>
                               <FormControl className="flex-grow">
-                                  <Textarea placeholder="Describe the scene e.g., 'Embroidered on a dark denim jacket'" className="resize-none h-full" {...field} disabled={totalLoading}/>
+                                  <Textarea placeholder="e.g., 'Embroidered on a dark denim jacket'" className="resize-none h-full" {...field} disabled={totalLoading}/>
                               </FormControl>
                               <FormMessage />
                           </FormItem>

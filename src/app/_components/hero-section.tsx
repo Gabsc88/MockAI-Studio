@@ -74,6 +74,9 @@ export default function HeroSection() {
 
   const handleMockupResult = (url: string | null) => {
     setGeneratedMockup(url);
+    if (url) {
+        setIsLoading(false);
+    }
   };
 
   const handleSetPrompt = (prompt: string) => {
