@@ -150,7 +150,7 @@ const MockupGenerator = forwardRef<MockupGeneratorRef, MockupGeneratorProps>(
                       <div className="flex justify-between items-center mb-2">
                           <label htmlFor={field.name} className="block text-sm font-medium">Describe the Scene</label>
                           <Button type="button" variant="ghost" size="sm" onClick={handleRandomPrompt} disabled={totalLoading}>
-                              <Sparkles className="mr-2 h-4 w-4 icon-gradient" /> Inspire Me
+                              <Sparkles className="mr-2 h-4 w-4 icon-gradient" /> Enhance prompt
                           </Button>
                       </div>
                       <FormControl className="flex-grow">
