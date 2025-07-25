@@ -122,24 +122,30 @@ export default function GeneratePage() {
                                     </div>
                                 ) : logoPreview ? (
                                      generatedMockup ? (
-                                        <Image
-                                            src={generatedMockup}
-                                            alt="AI generated mockup"
-                                            width={1024}
-                                            height={1024}
-                                            className="h-full w-full object-cover transition-all duration-500 ease-in-out hover:scale-105"
-                                            data-ai-hint="logo mockup"
-                                            unoptimized
-                                        />
+                                        <div onClick={handlePreviewClick} className="w-full h-full cursor-pointer">
+                                            <Image
+                                                src={generatedMockup}
+                                                alt="AI generated mockup. Click to upload a new logo."
+                                                title="Click to upload a new logo"
+                                                width={1024}
+                                                height={1024}
+                                                className="h-full w-full object-cover transition-all duration-500 ease-in-out hover:scale-105"
+                                                data-ai-hint="logo mockup"
+                                                unoptimized
+                                            />
+                                        </div>
                                     ) : (
-                                        <Image
-                                            src={logoPreview}
-                                            alt="Uploaded logo"
-                                            width={1024}
-                                            height={1024}
-                                            className="h-full w-full object-contain p-8"
-                                            data-ai-hint="logo"
-                                        />
+                                        <div onClick={handlePreviewClick} className="w-full h-full cursor-pointer">
+                                            <Image
+                                                src={logoPreview}
+                                                alt="Uploaded logo. Click to upload a new one."
+                                                title="Click to upload a new logo"
+                                                width={1024}
+                                                height={1024}
+                                                className="h-full w-full object-contain p-8"
+                                                data-ai-hint="logo"
+                                            />
+                                        </div>
                                     )
                                 ) : (
                                     <div onClick={handlePreviewClick} className="w-full h-full bg-muted flex flex-col items-center justify-center gap-4 p-8 text-center cursor-pointer border-2 border-dashed border-muted-foreground/50 hover:border-primary transition-colors">
