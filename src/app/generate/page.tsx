@@ -103,6 +103,23 @@ export default function GeneratePage() {
                                 logoFile={logoFile}
                             />
                         </div>
+                         {generatedMockup && !isLoading && (
+                            <div className="w-full max-w-lg flex flex-col sm:flex-row gap-4">
+                                <a href={generatedMockup} download="mockup.png" className="w-full">
+                                    <Button type="button" variant="outline" className="w-full">
+                                        <Download className="mr-2 h-4 w-4" /> Download Mockup
+                                    </Button>
+                                </a>
+                                <div className="w-full flex items-center gap-2">
+                                    <Button type="button" variant="outline" className="w-full">
+                                        <Share2 className="mr-2 h-4 w-4" /> Share
+                                    </Button>
+                                    <Button size="icon" variant="outline"><Twitter className="h-4 w-4"/></Button>
+                                    <Button size="icon" variant="outline"><Facebook className="h-4 w-4"/></Button>
+                                    <Button size="icon" variant="outline"><Linkedin className="h-4 w-4"/></Button>
+                                </div>
+                            </div>
+                        )}
                     </div>
                     <div className="relative flex flex-col items-center justify-center gap-4">
                         <Card className="w-full max-w-2xl aspect-square overflow-hidden border-2 border-primary/20 shadow-2xl shadow-primary/10">
@@ -142,23 +159,6 @@ export default function GeneratePage() {
                                 )}
                             </CardContent>
                         </Card>
-                        {generatedMockup && !isLoading && (
-                            <div className="w-full max-w-2xl flex flex-col sm:flex-row gap-4">
-                                <a href={generatedMockup} download="mockup.png" className="w-full">
-                                    <Button type="button" variant="outline" className="w-full">
-                                        <Download className="mr-2 h-4 w-4" /> Download Mockup
-                                    </Button>
-                                </a>
-                                <div className="w-full flex items-center gap-2">
-                                    <Button type="button" variant="outline" className="w-full">
-                                        <Share2 className="mr-2 h-4 w-4" /> Share
-                                    </Button>
-                                    <Button size="icon" variant="outline"><Twitter className="h-4 w-4"/></Button>
-                                    <Button size="icon" variant="outline"><Facebook className="h-4 w-4"/></Button>
-                                    <Button size="icon" variant="outline"><Linkedin className="h-4 w-4"/></Button>
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </div>
             </section>
