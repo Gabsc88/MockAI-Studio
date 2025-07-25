@@ -14,12 +14,12 @@ export default function FinalCta() {
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Your Logo Deserves More Than a Flat Image</h2>
             <p className="mx-auto mt-4 max-w-[600px] text-muted-foreground md:text-xl">Upload it now and see the transformation.</p>
             <div className="mt-8">
-                <Button size="lg" className="button-gradient" asChild>
-                    <Link href="/generate">
+                <Link href="/generate">
+                    <Button size="lg" className="button-gradient">
                         Get Started
                         <ArrowRight className="ml-2 h-5 w-5" />
-                    </Link>
-                </Button>
+                    </Button>
+                </Link>
             </div>
         </div>
     </section>
