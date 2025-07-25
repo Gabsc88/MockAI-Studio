@@ -1,6 +1,6 @@
 
 import { Button } from '@/components/ui/button';
-import { UploadCloud } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 export default function FinalCta() {
@@ -16,8 +16,8 @@ export default function FinalCta() {
             <div className="mt-8">
                 <Button size="lg" className="button-gradient" asChild>
                     <Link href="/generate">
-                        <UploadCloud className="mr-2 h-5 w-5" />
-                        Upload Your Logo
+                        Get Started
+                        <ArrowRight className="ml-2 h-5 w-5" />
                     </Link>
                 </Button>
             </div>
