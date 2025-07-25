@@ -3,12 +3,12 @@ import Image from 'next/image';
 import { Card, CardContent } from '@/components/ui/card';
 
 const useCases = [
-    { title: "Stationery & Cards", image: "https://placehold.co/600x400/E85D70/FFFFFF.png", hint: "business card" },
-    { title: "Wall Signage", image: "https://placehold.co/600x400/8F6AE0/FFFFFF.png", hint: "office signage" },
-    { title: "Clothing & Embroidery", image: "https://placehold.co/600x400/61BDFD/FFFFFF.png", hint: "shirt embroidery" },
-    { title: "Product Packaging", image: "https://placehold.co/600x400/8169D9/FFFFFF.png", hint: "box packaging" },
-    { title: "Social Media Branding", image: "https://placehold.co/600x400/F9A825/FFFFFF.png", hint: "social media" },
-    { title: "Vehicle Wraps", image: "https://placehold.co/600x400/4CAF50/FFFFFF.png", hint: "car wrap" },
+    { title: "Stationery & Cards", image: "https://placehold.co/600x400/4285F4/FFFFFF.png", hint: "business card" },
+    { title: "Wall Signage", image: "https://placehold.co/600x400/4285F4/FFFFFF.png", hint: "office signage" },
+    { title: "Clothing & Embroidery", image: "https://placehold.co/600x400/4285F4/FFFFFF.png", hint: "shirt embroidery" },
+    { title: "Product Packaging", image: "https://placehold.co/600x400/4285F4/FFFFFF.png", hint: "box packaging" },
+    { title: "Social Media Branding", image: "https://placehold.co/600x400/4285F4/FFFFFF.png", hint: "social media" },
+    { title: "Vehicle Wraps", image: "https://placehold.co/600x400/4285F4/FFFFFF.png", hint: "car wrap" },
 ];
 
 export default function UseCases() {

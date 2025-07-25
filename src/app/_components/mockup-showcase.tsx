@@ -7,14 +7,14 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 const images = [
-    { src: 'https://placehold.co/600x600/E85D70/FFFFFF.png', alt: 'Red background mockup', hint: 'logo mockup' },
-    { src: 'https://placehold.co/600x600/8F6AE0/FFFFFF.png', alt: 'Purple background mockup', hint: 'logo mockup' },
-    { src: 'https://placehold.co/600x600/61BDFD/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup' },
-    { src: 'https://placehold.co/600x600/8169D9/FFFFFF.png', alt: 'Dark purple background mockup', hint: 'logo mockup' },
-    { src: 'https://placehold.co/600x600/F9A825/FFFFFF.png', alt: 'Yellow background mockup', hint: 'logo mockup' },
-    { src: 'https://placehold.co/600x600/4CAF50/FFFFFF.png', alt: 'Green background mockup', hint: 'logo mockup' },
-    { src: 'https://placehold.co/600x600/FF5722/FFFFFF.png', alt: 'Orange background mockup', hint: 'logo mockup' },
-    { src: 'https://placehold.co/600x600/3F51B5/FFFFFF.png', alt: 'Indigo background mockup', hint: 'logo mockup' },
+    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup' },
+    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup' },
+    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup' },
+    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup' },
+    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup' },
+    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup' },
+    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup' },
+    { src: 'https://placehold.co/600x600/4285F4/FFFFFF.png', alt: 'Blue background mockup', hint: 'logo mockup' },
 ];
 
 export default function MockupShowcase() {
