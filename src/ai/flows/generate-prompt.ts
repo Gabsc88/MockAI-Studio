@@ -28,17 +28,19 @@ const prompt = ai.definePrompt({
   name: 'generateRandomPromptPrompt',
   input: {schema: GenerateRandomPromptInputSchema},
   output: {schema: GenerateRandomPromptOutputSchema},
-  prompt: `You are a creative prompt generator for a logo mockup application. Generate a single, imaginative prompt for creating a logo mockup.  The prompt should be short, but descriptive.
+  prompt: `You are a creative prompt generator for a logo mockup application. Your task is to generate a single, imaginative, and detailed prompt for creating a logo mockup. The prompt should be descriptive enough to inspire a unique and visually rich image.
 
-Examples:
-* Gold foil on black card
-* 3D sign on office wall
-* Embroidery on fabric
-* Logo on a coffee cup
-* Neon sign in a bar
-* Embossed on leather
+Think about materials, lighting, environment, and style.
 
-Do not repeat these examples.
+Here are some examples of detailed prompts:
+* A close-up of a logo embossed in gold foil on a thick, black cardstock business card, with a soft, cinematic side light catching the texture.
+* A 3D, backlit logo made of brushed aluminum, mounted on a modern office reception wall made of dark wood panels.
+* Realistic embroidery of a logo on the chest of a heather grey t-shirt, showing the texture of the fabric and thread.
+* A logo printed on a white ceramic coffee cup, held in someone's hands, with a cozy cafe blurred in the background.
+* A vibrant neon sign of a logo glowing on a brick wall inside a dimly lit, moody bar.
+* A logo elegantly debossed on the cover of a rich, brown leather-bound journal.
+
+Do not repeat these examples. Generate a new, unique, and detailed prompt.
 
 Output:
 `, // No Handlebars variables since it's generative
